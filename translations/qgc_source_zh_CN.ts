@@ -16073,7 +16073,7 @@ ROTATION_NONE indicates component points in direction of flight.</translation>
     <message>
       <location filename="../src/UI/AppSettings/SettingsPagesModel.qml" line="99"/>
       <source>Help</source>
-      <translation type="unfinished">Help</translation>
+      <translation>帮助</translation>
     </message>
     <message>
       <location filename="../src/UI/AppSettings/SettingsPagesModel.qml" line="106"/>
