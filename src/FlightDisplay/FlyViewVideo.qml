@@ -257,4 +257,46 @@ Item {
         id: obstacleDistance
         showText: pipState.state === pipState.fullState
     }
+    QGCComboBox {
+        id: rtspSelector
+        //fact: QGroundControl.settingsManager.videoSettings.rtspUrl
+
+        // 提供枚举选项
+        model: [
+            qsTr("RTSP1"),
+            qsTr("RTSP2"),
+            qsTr("RTSP3"),
+            qsTr("RTSP4"),
+            qsTr("RTSP5")
+        ]
+
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+        }
+
+        onActivated: (index) => {
+            switch(index) {
+                case 0:
+                    QGroundControl.settingsManager.videoSettings.rtspUrl.value = QGroundControl.settingsManager.videoSettings.rtsp1Url.value
+                    console.log("Switched to RTSP1:", QGroundControl.settingsManager.videoSettings.rtsp1Url.value)
+                    break
+                case 1:
+                    QGroundControl.settingsManager.videoSettings.rtspUrl.value = QGroundControl.settingsManager.videoSettings.rtsp2Url.value
+                    console.log("Switched to RTSP2:", QGroundControl.settingsManager.videoSettings.rtsp2Url.value)
+                    break
+                case 2:
+                    QGroundControl.settingsManager.videoSettings.rtspUrl.value = QGroundControl.settingsManager.videoSettings.rtsp3Url.value
+                    console.log("Switched to RTSP3:", QGroundControl.settingsManager.videoSettings.rtsp3Url.value)
+                    break
+                case 3:
+                    QGroundControl.settingsManager.videoSettings.rtspUrl.value = QGroundControl.settingsManager.videoSettings.rtsp4Url.value
+                    console.log("Switched to RTSP4:", QGroundControl.settingsManager.videoSettings.rtsp4Url.value)
+                    break
+                case 4:
+                    QGroundControl.settingsManager.videoSettings.rtspUrl.value = QGroundControl.settingsManager.videoSettings.rtsp5Url.value
+                    console.log("Switched to RTSP4:", QGroundControl.settingsManager.videoSettings.rtsp5Url.value)
+                    break
+            }
+        }
+    }
 }

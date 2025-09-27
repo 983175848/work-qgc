@@ -55,13 +55,185 @@ SettingsPage {
         heading:            qsTr("Connection")
         visible:            !_videoSourceDisabled && !_videoAutoStreamConfig && (_isTCP || _isRTSP | _requiresUDPUrl)
 
+        // LabelledFactTextField {
+        //     Layout.fillWidth:           true
+        //     textFieldPreferredWidth:    _urlFieldWidth
+        //     label:                      qsTr("RTSP URL")
+        //     fact:                       _videoSettings.rtspUrl
+        //     visible:                    _isRTSP && _videoSettings.rtspUrl.visible
+        // }
+        // 唯一的rtsp视频流，需要切换其他的视频，填入并更新此处fact
         LabelledFactTextField {
             Layout.fillWidth:           true
-            textFieldPreferredWidth:    _urlFieldWidth
+            //textFieldPreferredWidth:    _urlFieldWidth
             label:                      qsTr("RTSP URL")
             fact:                       _videoSettings.rtspUrl
-            visible:                    _isRTSP && _videoSettings.rtspUrl.visible
+            visible:                    false//_isRTSP && _videoSettings.rtspUrl.visible
         }
+
+        // RTSP流URL输入（分两步，统一风格）
+        // 用户只需输入IP和码流编号，URL自动生成并同步到rtspUrl
+
+        // RTSP1
+        LabelledFactTextField {
+            Layout.fillWidth: true
+            label: qsTr("IP1 Address")
+            fact: _videoSettings.rtsp1Ip
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
+        }
+
+        LabelledFactTextField {
+            Layout.fillWidth: true
+            label: qsTr("Stream No.1")
+            fact: _videoSettings.rtsp1StreamNo
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
+        }
+
+        LabelledFactTextField {
+            Layout.fillWidth: true
+            label: qsTr("RTSP1 URL")
+            fact: _videoSettings.rtsp1Url
+            visible: false
+
+            Binding {
+                target: _videoSettings.rtsp1Url
+                property: "rawValue"
+                value: (_videoSettings.rtsp1Ip.valueString.length > 0 &&
+                        _videoSettings.rtsp1StreamNo.valueString.length > 0)
+                       ? "rtsp://admin:Hik12345@" + _videoSettings.rtsp1Ip.valueString +
+                         ":554/Streaming/Channels/" + _videoSettings.rtsp1StreamNo.valueString
+                       : ""
+            }
+        }
+
+        // RTSP2
+        LabelledFactTextField {
+            Layout.fillWidth: true
+            label: qsTr("IP2 Address")
+            fact: _videoSettings.rtsp2Ip
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
+        }
+
+        LabelledFactTextField {
+            Layout.fillWidth: true
+            label: qsTr("Stream No.2")
+            fact: _videoSettings.rtsp2StreamNo
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
+        }
+
+        LabelledFactTextField {
+            Layout.fillWidth: true
+            label: qsTr("RTSP2 URL")
+            fact: _videoSettings.rtsp2Url
+            visible: false
+
+            Binding {
+                target: _videoSettings.rtsp2Url
+                property: "rawValue"
+                value: (_videoSettings.rtsp2Ip.valueString.length > 0 &&
+                        _videoSettings.rtsp2StreamNo.valueString.length > 0)
+                       ? "rtsp://admin:Hik12345@" + _videoSettings.rtsp2Ip.valueString +
+                         ":554/Streaming/Channels/" + _videoSettings.rtsp2StreamNo.valueString
+                       : ""
+            }
+        }
+
+        // RTSP3
+        LabelledFactTextField {
+            Layout.fillWidth: true
+            label: qsTr("IP3 Address")
+            fact: _videoSettings.rtsp3Ip
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
+        }
+
+        LabelledFactTextField {
+            Layout.fillWidth: true
+            label: qsTr("Stream No.3")
+            fact: _videoSettings.rtsp3StreamNo
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
+        }
+
+        LabelledFactTextField {
+            Layout.fillWidth: true
+            label: qsTr("RTSP3 URL")
+            fact: _videoSettings.rtsp3Url
+            visible: false
+
+            Binding {
+                target: _videoSettings.rtsp3Url
+                property: "rawValue"
+                value: (_videoSettings.rtsp3Ip.valueString.length > 0 &&
+                        _videoSettings.rtsp3StreamNo.valueString.length > 0)
+                       ? "rtsp://admin:Hik12345@" + _videoSettings.rtsp3Ip.valueString +
+                         ":554/Streaming/Channels/" + _videoSettings.rtsp3StreamNo.valueString
+                       : ""
+            }
+        }
+
+        // RTSP4
+        LabelledFactTextField {
+            Layout.fillWidth: true
+            label: qsTr("IP4 Address")
+            fact: _videoSettings.rtsp4Ip
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
+        }
+
+        LabelledFactTextField {
+            Layout.fillWidth: true
+            label: qsTr("Stream No.4")
+            fact: _videoSettings.rtsp4StreamNo
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
+        }
+
+        LabelledFactTextField {
+            Layout.fillWidth: true
+            label: qsTr("RTSP4 URL")
+            fact: _videoSettings.rtsp4Url
+            visible: false
+
+            Binding {
+                target: _videoSettings.rtsp4Url
+                property: "rawValue"
+                value: (_videoSettings.rtsp4Ip.valueString.length > 0 &&
+                        _videoSettings.rtsp4StreamNo.valueString.length > 0)
+                       ? "rtsp://admin:Hik12345@" + _videoSettings.rtsp4Ip.valueString +
+                         ":554/Streaming/Channels/" + _videoSettings.rtsp4StreamNo.valueString
+                       : ""
+            }
+        }
+
+        // RTSP5
+        LabelledFactTextField {
+            Layout.fillWidth: true
+            label: qsTr("IP5 Address")
+            fact: _videoSettings.rtsp5Ip
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
+        }
+
+        LabelledFactTextField {
+            Layout.fillWidth: true
+            label: qsTr("Stream No.5")
+            fact: _videoSettings.rtsp5StreamNo
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
+        }
+
+        LabelledFactTextField {
+            Layout.fillWidth: true
+            label: qsTr("RTSP5 URL")
+            fact: _videoSettings.rtsp5Url
+            visible: false
+
+            Binding {
+                target: _videoSettings.rtsp5Url
+                property: "rawValue"
+                value: (_videoSettings.rtsp5Ip.valueString.length > 0 &&
+                        _videoSettings.rtsp5StreamNo.valueString.length > 0)
+                       ? "rtsp://admin:Hik12345@" + _videoSettings.rtsp5Ip.valueString +
+                         ":554/Streaming/Channels/" + _videoSettings.rtsp5StreamNo.valueString
+                       : ""
+            }
+        }
+
 
         LabelledFactTextField {
             Layout.fillWidth:           true

@@ -25,6 +25,216 @@
     "default":     ""
 },
 {
+    "name":             "rtsp1Url",
+    "shortDesc": "Video RTSP1 Url",
+    "longDesc":  "RTSP1 url address and port to bind to for video stream. Example: rtsp://192.168.42.1:554/live",
+    "type":             "string",
+    "default":     ""
+},
+{
+    "name": "rtsp1Ip",
+    "shortDesc": "RTSP1 IP Address",
+    "longDesc": "IP address of the RTSP1 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name": "rtsp1StreamNo",
+    "shortDesc": "RTSP1 Stream Number",
+    "longDesc": "Stream channel number of the RTSP1 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name":             "rtsp2Url",
+    "shortDesc": "Video RTSP2 Url",
+    "longDesc":  "RTSP2 url address and port to bind to for video stream. Example: rtsp://192.168.42.1:554/live",
+    "type":             "string",
+    "default":     ""
+},
+{
+    "name": "rtsp2Ip",
+    "shortDesc": "RTSP2 IP Address",
+    "longDesc": "IP address of the RTSP2 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name": "rtsp2StreamNo",
+    "shortDesc": "RTSP2 Stream Number",
+    "longDesc": "Stream channel number of the RTSP2 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name":             "rtsp3Url",
+    "shortDesc": "Video RTSP3 Url",
+    "longDesc":  "RTSP3 url address and port to bind to for video stream. Example: rtsp://192.168.42.1:554/live",
+    "type":             "string",
+    "default":     ""
+},
+{
+    "name": "rtsp3Ip",
+    "shortDesc": "RTSP3 IP Address",
+    "longDesc": "IP address of the RTSP3 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name": "rtsp3StreamNo",
+    "shortDesc": "RTSP3 Stream Number",
+    "longDesc": "Stream channel number of the RTSP3 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name":             "rtsp4Url",
+    "shortDesc": "Video RTSP4 Url",
+    "longDesc":  "RTSP4 url address and port to bind to for video stream. Example: rtsp://192.168.42.1:554/live",
+    "type":             "string",
+    "default":     ""
+},
+{
+    "name": "rtsp4Ip",
+    "shortDesc": "RTSP4 IP Address",
+    "longDesc": "IP address of the RTSP4 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name": "rtsp4StreamNo",
+    "shortDesc": "RTSP4 Stream Number",
+    "longDesc": "Stream channel number of the RTSP4 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name":             "rtsp5Url",
+    "shortDesc": "Video RTSP5 Url",
+    "longDesc":  "RTSP5 url address and port to bind to for video stream. Example: rtsp://192.168.42.1:554/live",
+    "type":             "string",
+    "default":     ""
+},
+{
+    "name": "rtsp5Ip",
+    "shortDesc": "RTSP5 IP Address",
+    "longDesc": "IP address of the RTSP5 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name": "rtsp5StreamNo",
+    "shortDesc": "RTSP5 Stream Number",
+    "longDesc": "Stream channel number of the RTSP5 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name":             "rtsp6Url",
+    "shortDesc": "Video RTSP6 Url",
+    "longDesc":  "RTSP6 url address and port to bind to for video stream. Example: rtsp://192.168.42.1:554/live",
+    "type":             "string",
+    "default":     ""
+},
+{
+    "name": "rtsp6Ip",
+    "shortDesc": "RTSP6 IP Address",
+    "longDesc": "IP address of the RTSP6 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name": "rtsp6StreamNo",
+    "shortDesc": "RTSP6 Stream Number",
+    "longDesc": "Stream channel number of the RTSP6 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name":             "rtsp7Url",
+    "shortDesc": "Video RTSP7 Url",
+    "longDesc":  "RTSP7 url address and port to bind to for video stream. Example: rtsp://192.168.42.1:554/live",
+    "type":             "string",
+    "default":     ""
+},
+{
+    "name": "rtsp7Ip",
+    "shortDesc": "RTSP7 IP Address",
+    "longDesc": "IP address of the RTSP7 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name": "rtsp7StreamNo",
+    "shortDesc": "RTSP7 Stream Number",
+    "longDesc": "Stream channel number of the RTSP7 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name":             "rtsp8Url",
+    "shortDesc": "Video RTSP8 Url",
+    "longDesc":  "RTSP8 url address and port to bind to for video stream. Example: rtsp://192.168.42.1:554/live",
+    "type":             "string",
+    "default":     ""
+},
+{
+    "name": "rtsp8Ip",
+    "shortDesc": "RTSP8 IP Address",
+    "longDesc": "IP address of the RTSP8 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name": "rtsp8StreamNo",
+    "shortDesc": "RTSP8 Stream Number",
+    "longDesc": "Stream channel number of the RTSP8 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name":             "rtsp9Url",
+    "shortDesc": "Video RTSP9 Url",
+    "longDesc":  "RTSP9 url address and port to bind to for video stream. Example: rtsp://192.168.42.1:554/live",
+    "type":             "string",
+    "default":     ""
+},
+{
+    "name": "rtsp9Ip",
+    "shortDesc": "RTSP9 IP Address",
+    "longDesc": "IP address of the RTSP9 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name": "rtsp9StreamNo",
+    "shortDesc": "RTSP9 Stream Number",
+    "longDesc": "Stream channel number of the RTSP9 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name":             "rtsp10Url",
+    "shortDesc": "Video RTSP10 Url",
+    "longDesc":  "RTSP10 url address and port to bind to for video stream. Example: rtsp://192.168.42.1:554/live",
+    "type":             "string",
+    "default":     ""
+},
+{
+    "name": "rtsp10Ip",
+    "shortDesc": "RTSP10 IP Address",
+    "longDesc": "IP address of the RTSP10 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
+    "name": "rtsp10StreamNo",
+    "shortDesc": "RTSP10 Stream Number",
+    "longDesc": "Stream channel number of the RTSP10 video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
     "name":             "tcpUrl",
     "shortDesc": "Video TCP Url",
     "longDesc":  "TCP url address and port to bind to for video stream. Example: 192.168.143.200:3001",
@@ -100,6 +310,96 @@
     "name":             "rtspTimeout",
     "shortDesc": "RTSP Video Timeout",
     "longDesc":  "How long to wait before assuming RTSP link is gone.",
+    "type":             "uint32",
+    "min":              1,
+    "units":            "s",
+    "default":     8
+},
+{
+    "name":             "rtsp1Timeout",
+    "shortDesc": "RTSP1 Video Timeout",
+    "longDesc":  "How long to wait before assuming RTSP1 link is gone.",
+    "type":             "uint32",
+    "min":              1,
+    "units":            "s",
+    "default":     8
+},
+{
+    "name":             "rtsp2Timeout",
+    "shortDesc": "RTSP2 Video Timeout",
+    "longDesc":  "How long to wait before assuming RTSP2 link is gone.",
+    "type":             "uint32",
+    "min":              1,
+    "units":            "s",
+    "default":     8
+},
+{
+    "name":             "rtsp3Timeout",
+    "shortDesc": "RTSP3 Video Timeout",
+    "longDesc":  "How long to wait before assuming RTSP3 link is gone.",
+    "type":             "uint32",
+    "min":              1,
+    "units":            "s",
+    "default":     8
+},
+{
+    "name":             "rtsp4Timeout",
+    "shortDesc": "RTSP4 Video Timeout",
+    "longDesc":  "How long to wait before assuming RTSP4 link is gone.",
+    "type":             "uint32",
+    "min":              1,
+    "units":            "s",
+    "default":     8
+},
+{
+    "name":             "rtsp5Timeout",
+    "shortDesc": "RTSP5 Video Timeout",
+    "longDesc":  "How long to wait before assuming RTSP5 link is gone.",
+    "type":             "uint32",
+    "min":              1,
+    "units":            "s",
+    "default":     8
+},
+{
+    "name":             "rtsp6Timeout",
+    "shortDesc": "RTSP6 Video Timeout",
+    "longDesc":  "How long to wait before assuming RTSP6 link is gone.",
+    "type":             "uint32",
+    "min":              1,
+    "units":            "s",
+    "default":     8
+},
+{
+    "name":             "rtsp7Timeout",
+    "shortDesc": "RTSP7 Video Timeout",
+    "longDesc":  "How long to wait before assuming RTSP7 link is gone.",
+    "type":             "uint32",
+    "min":              1,
+    "units":            "s",
+    "default":     8
+},
+{
+    "name":             "rtsp8Timeout",
+    "shortDesc": "RTSP8 Video Timeout",
+    "longDesc":  "How long to wait before assuming RTSP8 link is gone.",
+    "type":             "uint32",
+    "min":              1,
+    "units":            "s",
+    "default":     8
+},
+{
+    "name":             "rtsp9Timeout",
+    "shortDesc": "RTSP9 Video Timeout",
+    "longDesc":  "How long to wait before assuming RTSP9 link is gone.",
+    "type":             "uint32",
+    "min":              1,
+    "units":            "s",
+    "default":     8
+},
+{
+    "name":             "rtsp10Timeout",
+    "shortDesc": "RTSP10 Video Timeout",
+    "longDesc":  "How long to wait before assuming RTSP10 link is gone.",
     "type":             "uint32",
     "min":              1,
     "units":            "s",

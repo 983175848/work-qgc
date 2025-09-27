@@ -32,6 +32,28 @@ RowLayout {
     property bool allowEditMode:    true
     property bool editMode:         false
 
+    function flightModeDisplayName(mode) {
+            switch(mode) {
+                case "Manual": return qsTr("Manual");
+                case "Acro": return qsTr("Acro");
+                case "Learning": return qsTr("Learning");
+                case "Steering": return qsTr("Steering");
+                case "Hold": return qsTr("Hold");
+                case "Loiter": return qsTr("Loiter");
+                case "Follow": return qsTr("Follow");
+                case "Simple": return qsTr("Simple");
+                case "Dock": return qsTr("Dock");
+                case "Circle": return qsTr("Circle");
+                case "Auto": return qsTr("Auto");
+                case "RTL": return qsTr("RTL");
+                case "Smart RTL": return qsTr("Smart RTL");
+                case "Guided": return qsTr("Guided");
+                case "lnitializing": return qsTr("lnitializing");
+                //在case处继续补充所有需要的模式
+                default: return mode;
+            }
+        }
+
     RowLayout {
         Layout.fillWidth: true
 
@@ -44,12 +66,14 @@ RowLayout {
             color:      qgcPal.text
             source:     "/qmlimages/FlightModesComponentIcon.png"
         }
-
+        // 当前飞行模式文本
         QGCLabel {
-            text:               activeVehicle ? activeVehicle.flightMode : qsTr("N/A", "No data to display")
+            //text:               activeVehicle ? activeVehicle.flightMode : qsTr("N/A", "No data to display")
+            // 原有的飞行模式来自c++返回的字符串，无法通过qstr进行翻译
+            text:               activeVehicle ? flightModeDisplayName(activeVehicle.flightMode) : qsTr("N/A", "No data to display")
             font.pointSize:     fontPointSize
             Layout.alignment:   Qt.AlignCenter
-
+            // 点击可展开模式选择抽屉
             MouseArea {
                 anchors.fill:   parent
                 onClicked:      mainWindow.showIndicatorDrawer(drawerComponent, control)
@@ -141,10 +165,11 @@ RowLayout {
                 RowLayout {
                     spacing: ScreenTools.defaultFontPixelWidth
                     visible: editMode || !hiddenFlightModesList.find(item => { return item === modelData } )
-
+                    // 模式按钮
                     QGCDelayButton {
                         id:                 modeButton
-                        text:               modelData
+                        text:               flightModeDisplayName(modelData)
+                        //text:               modelData
                         delay:              flightModeSettings.requireModeChangeConfirmation.rawValue ? 500 : 0
                         Layout.fillWidth:   true
 
