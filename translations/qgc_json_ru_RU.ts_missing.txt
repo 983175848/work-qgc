@@ -1,0 +1,1 @@
+"If this option is enabled GroundControl will automatically connect to an RTK GPS which is connected via USB.": "TODO",

@@ -1,0 +1,50 @@
+"Serial &lt;none available&gt;": "TODO",
+"Reset to vehicle&apos;s configuration defaults": "TODO",
+"* Tail &amp; Gyros *": "TODO",
+"&apos;%1&apos; is a built-in preset which cannot be deleted.": "TODO",
+"This will restart the WiFi Bridge so the settings you&apos;ve changed can take effect. Note that you may have to change your computer WiFi settings and QGroundControl link settings to match these changes. Are you sure you want to restart it?": "TODO",
+"- A few seconds later you should hear a number of beeps (one for each battery cell you&apos;re using)": "TODO",
+"Couldn&apos;t replace the previously tagged images": "TODO",
+"Thrust curve &lt;b&gt;&lt;a href=&quot;https://docs.px4.io/main/en/config_mc/pid_tuning_guide_multicopter.html#thrust-curve&quot;&gt;?&lt;/a&gt;&lt;/b&gt;": "TODO",
+"Click in the map to add vertices. Click &apos;Done Tracing&apos; when finished.": "TODO",
+"The current user does not have the correct permissions to access serial devices. You should also remove modemmanager since it also interferes.&lt;br/&gt;&lt;br/&gt;If you are using Ubuntu, execute the following commands to fix these issues:&lt;br/&gt;&lt;pre&gt;sudo usermod -a -G dialout $USER&lt;br/&gt;sudo apt-get remove modemmanager&lt;/pre&gt;": "TODO",
+"Signing key has changed. Don&apos;t forget to send to Vehicle(s) if needed.": "TODO",
+"UTM projection is not in supported format. Must be PROJCS[&quot;WGS_1984_UTM_Zone_##N/S": "TODO",
+"Warning: This setting should be higher than &apos;Spin While Armed&apos;": "TODO",
+"Receiving signal. Perform range test &amp; confirm.": "TODO",
+"Move &apos;%1&apos; %2 to the %3 location. %4": "TODO",
+"Gimbal Type changes takes affect next reboot of autopilot": "TODO",
+"This will automatically spin individual motors at 15% thrust.&lt;br /&gt;&lt;br /&gt;
+&lt;b&gt;Warning: Only proceed if you removed all propellers&lt;/b&gt;.&lt;br /&gt;
+%1
+&lt;br /&gt;
+The procedure is as following:&lt;br /&gt;
+- After confirming, the first motor starts to spin for 0.5 seconds.&lt;br /&gt;
+- Then click on the motor that was spinning.&lt;br /&gt;
+- The above steps are repeated for all motors.&lt;br /&gt;
+- The motor output functions will automatically be reassigned by the selected order.&lt;br /&gt;
+&lt;br /&gt;
+Do you wish to proceed?": "TODO",
+"The log file &apos;%1&apos; is corrupt or empty.": "TODO",
+"Release &lt;br&gt; Control": "TODO",
+"Keep Current Plan, Don&apos;t Update From Vehicle": "TODO",
+"WARNING: The flight board you are using has a critical service bulletin against it which advises against flying. For details see: https://discuss.cubepilot.org/t/sb-0000002-critical-service-bulletin-for-cubes-purchased-between-january-2019-to-present-do-not-fly/406": "TODO",
+"The current calibration settings are now displayed for each channel on screen.
+
+Click the Next button to upload calibration to board. Click Cancel if you don&apos;t want to save these values.": "TODO",
+"Geotagging failed. Couldn&apos;t open an image.": "TODO",
+"Wind &amp; weather": "TODO",
+"Click on the map to add vertices. Click &apos;Done Fencing&apos; when finished.": "TODO",
+"Airmode (disable during tuning) &lt;b&gt;&lt;a href=&quot;https://docs.px4.io/main/en/config_mc/pid_tuning_guide_multicopter.html#airmode-mixer-saturation&quot;&gt;?&lt;/a&gt;&lt;/b&gt;": "TODO",
+"Plan Files (*.%1)": "TODO",
+"Vehicle reboot required after change": "TODO",
+"Yaw &lt;br&gt; Lock": "TODO",
+"Position control mode (set this to &apos;simple&apos; during tuning):": "TODO",
+"You&apos;ve connected a %1.": "TODO",
+"If you want to reset your airframe configuration and select a standard configuration, click &apos;Reset&apos; below.": "TODO",
+"Pause the vehicle at it&apos;s current position, adjusting altitude up or down as needed.": "TODO",
+"To change this configuration, select the desired airframe below then click &apos;Apply and Restart&apos;.": "TODO",
+"Geotagging failed. Couldn&apos;t open log file.": "TODO",
+"&lt;br /&gt;No motors are assigned yet.
+By saying yes, all motors will be assigned to the first %1 channels of the selected output (%2)
+ (you can also first assign all motors, then start the identification).&lt;br /&gt;": "TODO",

@@ -6,6 +6,7 @@ import os
 import sys
 import re
 
+from dict_ru_RU import DictRuRU
 from dict_zh_CN import DictZhCN
 
 LOG_FORMAT_CONSOLE = '%(asctime)s.%(msecs)03d|%(levelname)s|%(message)s'
@@ -22,6 +23,7 @@ class QgcTranslater:
     def __init__(self):
         super().__init__()
         self.dictionary = DictZhCN()
+        self.dictionary = DictRuRU()
 
     def translate_text(self, english_text):
         return self.dictionary.translate_text(english_text)
@@ -116,6 +118,8 @@ def main():
     files_to_process = [
         'qgc_json_zh_CN.ts',
         'qgc_source_zh_CN.ts',
+        'qgc_json_ru_RU.ts',
+    	'qgc_source_ru_RU.ts',
         # 'qgc_zh_CN.ts',
         #'qgc-json.ts'
     ]
