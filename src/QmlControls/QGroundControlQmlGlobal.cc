@@ -37,7 +37,10 @@
 #ifdef QGC_UTM_ADAPTER
 #include "UTMSPManager.h"
 #endif
-
+//#ifdef QGC_ANDROID
+#ifdef Q_OS_ANDROID
+#include "AndroidHCNetSDKInterface.h"   //海康sdk单例
+#endif
 #include <QtCore/QSettings>
 #include <QtCore/QLineF>
 
@@ -58,6 +61,9 @@ QGroundControlQmlGlobal::QGroundControlQmlGlobal(QObject *parent)
     , _settingsManager(SettingsManager::instance())
     , _corePlugin(QGCCorePlugin::instance())
     , _globalPalette(new QGCPalette(this))
+#ifdef Q_OS_ANDROID
+    , _androidHCNetSDK(AndroidHCNetSDKInterface::instance())    //海康sdk单例
+#endif
 #ifndef QGC_NO_SERIAL_LINK
     , _gpsRtkFactGroup(GPSManager::instance()->gpsRtk()->gpsRtkFactGroup())
 #endif

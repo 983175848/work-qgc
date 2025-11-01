@@ -12,8 +12,8 @@ import QtQuick
 import QGroundControl
 import QGroundControl.Controls
 
-
-
+//import HCNetSDK
+//import QGroundControl.AndroidHCNetSDKInterface
 Item {
     id: _root
 
@@ -22,7 +22,7 @@ Item {
 
     property int    _track_rec_x:       0
     property int    _track_rec_y:       0
-
+    property int    tmpsdk:       0
     PipState {
         id:         videoPipState
         pipView:    _root.pipView
@@ -30,11 +30,13 @@ Item {
 
         onWindowAboutToOpen: {
             QGroundControl.videoManager.stopVideo()
+            //tmpsdk = QGroundControl.AndroidHCNetSDKInterface.hcNetSDKLoginV40()
             videoStartDelay.start()
         }
 
         onWindowAboutToClose: {
             QGroundControl.videoManager.stopVideo()
+            //QGroundControl.AndroidHCNetSDKInterface.hcNetSDKLogoutV30(tmpsdk)
             videoStartDelay.start()
         }
 
@@ -278,23 +280,43 @@ Item {
             switch(index) {
                 case 0:
                     QGroundControl.settingsManager.videoSettings.rtspUrl.value = QGroundControl.settingsManager.videoSettings.rtsp1Url.value
+                    QGroundControl.settingsManager.videoSettings.rtspIp.value = QGroundControl.settingsManager.videoSettings.rtsp1Ip.value
                     console.log("Switched to RTSP1:", QGroundControl.settingsManager.videoSettings.rtsp1Url.value)
+                    QGroundControl.androidHCNetSDK.hcNetSDKLogoutV30_all()
+                    QGroundControl.androidHCNetSDK.hcNetSDKLoginV40Device1(QGroundControl.settingsManager.videoSettings.rtsp1Ip.value)
+
+                    // 注册1 退出2345
                     break
                 case 1:
                     QGroundControl.settingsManager.videoSettings.rtspUrl.value = QGroundControl.settingsManager.videoSettings.rtsp2Url.value
+                    QGroundControl.settingsManager.videoSettings.rtspIp.value = QGroundControl.settingsManager.videoSettings.rtsp2Ip.value
                     console.log("Switched to RTSP2:", QGroundControl.settingsManager.videoSettings.rtsp2Url.value)
+                    QGroundControl.androidHCNetSDK.hcNetSDKLogoutV30_all()
+                    QGroundControl.androidHCNetSDK.hcNetSDKLoginV40Device2(QGroundControl.settingsManager.videoSettings.rtsp2Ip.value)
+                    // 注册2 退出1345
                     break
                 case 2:
                     QGroundControl.settingsManager.videoSettings.rtspUrl.value = QGroundControl.settingsManager.videoSettings.rtsp3Url.value
+                    QGroundControl.settingsManager.videoSettings.rtspIp.value = QGroundControl.settingsManager.videoSettings.rtsp3Ip.value
                     console.log("Switched to RTSP3:", QGroundControl.settingsManager.videoSettings.rtsp3Url.value)
+                    QGroundControl.androidHCNetSDK.hcNetSDKLogoutV30_all()
+                    QGroundControl.androidHCNetSDK.hcNetSDKLoginV40Device3(QGroundControl.settingsManager.videoSettings.rtsp3Ip.value)
+                    //..
                     break
                 case 3:
                     QGroundControl.settingsManager.videoSettings.rtspUrl.value = QGroundControl.settingsManager.videoSettings.rtsp4Url.value
+                    QGroundControl.settingsManager.videoSettings.rtspIp.value = QGroundControl.settingsManager.videoSettings.rtsp4Ip.value
                     console.log("Switched to RTSP4:", QGroundControl.settingsManager.videoSettings.rtsp4Url.value)
+                    QGroundControl.androidHCNetSDK.hcNetSDKLogoutV30_all()
+                    QGroundControl.androidHCNetSDK.hcNetSDKLoginV40Device4(QGroundControl.settingsManager.videoSettings.rtsp4Ip.value)
                     break
                 case 4:
                     QGroundControl.settingsManager.videoSettings.rtspUrl.value = QGroundControl.settingsManager.videoSettings.rtsp5Url.value
-                    console.log("Switched to RTSP4:", QGroundControl.settingsManager.videoSettings.rtsp5Url.value)
+                    QGroundControl.settingsManager.videoSettings.rtspIp.value = QGroundControl.settingsManager.videoSettings.rtsp5Ip.value
+                    console.log("Switched to RTSP5:", QGroundControl.settingsManager.videoSettings.rtsp5Url.value)
+                    QGroundControl.androidHCNetSDK.hcNetSDKLogoutV30_all()
+                    QGroundControl.androidHCNetSDK.hcNetSDKLoginV40Device5(QGroundControl.settingsManager.videoSettings.rtsp5Ip.value)
+                    //..
                     break
             }
         }

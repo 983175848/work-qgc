@@ -148,14 +148,14 @@ void _qtGstLog(GstDebugCategory *category,
 
     switch (level) {
     case GST_LEVEL_ERROR:
-        log.critical(GStreamerAPILog, "%s %s", object_info, gst_debug_message_get(message));
+        //log.critical(GStreamerAPILog, "%s %s", object_info, gst_debug_message_get(message));
         break;
     case GST_LEVEL_WARNING:
-        log.warning(GStreamerAPILog, "%s %s", object_info, gst_debug_message_get(message));
+        //log.warning(GStreamerAPILog, "%s %s", object_info, gst_debug_message_get(message));
         break;
     case GST_LEVEL_FIXME:
     case GST_LEVEL_INFO:
-        log.info(GStreamerAPILog, "%s %s", object_info, gst_debug_message_get(message));
+        //log.info(GStreamerAPILog, "%s %s", object_info, gst_debug_message_get(message));
         break;
     case GST_LEVEL_DEBUG:
 #ifdef QT_DEBUG
@@ -163,7 +163,7 @@ void _qtGstLog(GstDebugCategory *category,
     case GST_LEVEL_TRACE:
     case GST_LEVEL_MEMDUMP:
 #endif
-        log.debug(GStreamerAPILog, "%s %s", object_info, gst_debug_message_get(message));
+        //log.debug(GStreamerAPILog, "%s %s", object_info, gst_debug_message_get(message)); //太多了看着烦人
         break;
     default:
         break;

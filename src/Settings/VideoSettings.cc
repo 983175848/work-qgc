@@ -351,6 +351,15 @@ DECLARE_SETTINGSFACT_NO_FUNC(VideoSettings, rtspUrl)
     return _rtspUrlFact;
 }
 
+DECLARE_SETTINGSFACT_NO_FUNC(VideoSettings, rtspIp)
+{
+    if (!_rtspIpFact) {
+        _rtspIpFact = _createSettingsFact(rtspIpName);
+        connect(_rtspIpFact, &Fact::valueChanged, this, &VideoSettings::_configChanged);
+    }
+    return _rtspIpFact;
+}
+
 DECLARE_SETTINGSFACT_NO_FUNC(VideoSettings, rtsp1Url)
 {
     if (!_rtsp1UrlFact) {

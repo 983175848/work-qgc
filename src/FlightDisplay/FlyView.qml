@@ -134,6 +134,252 @@ Item {
             visible:                !QGroundControl.videoManager.fullScreen
             utmspActTrigger:        utmspSendActTrigger
             isViewer3DOpen:         viewer3DWindow.isOpen
+            // 云台控制
+            Item {
+                id: gimbalControl
+                width: 140
+                height: 140
+                anchors {
+                    right: parent.right
+                    bottom: parent.bottom
+                    bottomMargin: 100
+                    rightMargin: 24
+                }
+                z: 999
+                visible: true
+
+                // 绘制圆形背景
+                Canvas {
+                    id: circleCanvas
+                    anchors.fill: parent
+                    onPaint: {
+                        var ctx = getContext("2d")
+                        ctx.clearRect(0, 0, width, height)
+                        var centerX = width / 2
+                        var centerY = height / 2
+                        var radius = width / 2
+
+                        // 半透明圆形背景
+                        ctx.beginPath()
+                        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI)
+                        ctx.fillStyle = Qt.rgba(0, 0, 0, 0.3)
+                        ctx.fill()
+                    }
+                }
+
+                // =======================
+                // 上方向
+                // =======================
+                MouseArea {
+                    id: upArea
+                    anchors.centerIn: parent
+                    width: parent.width * 0.4
+                    height: parent.height * 0.2
+                    anchors.verticalCenterOffset: -parent.height * 0.35
+                    hoverEnabled: true
+
+                    onPressed: {
+                        console.log("[PTZ] ↑ 上仰开始")
+                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 21, 0)
+                    }
+                    onReleased: {
+                        console.log("[PTZ] ↑ 上仰停止")
+                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 21, 1)
+                    }
+
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: width / 2
+                        color: upArea.pressed ? Qt.rgba(255,255,255,0.6) : Qt.rgba(255,255,255,0.2)
+                    }
+                }
+
+                // =======================
+                // 下方向
+                // =======================
+                MouseArea {
+                    id: downArea
+                    anchors.centerIn: parent
+                    width: parent.width * 0.4
+                    height: parent.height * 0.2
+                    anchors.verticalCenterOffset: parent.height * 0.35
+                    hoverEnabled: true
+
+                    onPressed: {
+                        console.log("[PTZ] ↓ 下俯开始")
+                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 22, 0)
+                    }
+                    onReleased: {
+                        console.log("[PTZ] ↓ 下俯停止")
+                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 22, 1)
+                    }
+
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: width / 2
+                        color: downArea.pressed ? Qt.rgba(255,255,255,0.6) : Qt.rgba(255,255,255,0.2)
+                    }
+                }
+
+                // =======================
+                // 左方向
+                // =======================
+                MouseArea {
+                    id: leftArea
+                    anchors.centerIn: parent
+                    width: parent.width * 0.2
+                    height: parent.height * 0.4
+                    anchors.horizontalCenterOffset: -parent.width * 0.35
+                    hoverEnabled: true
+
+                    onPressed: {
+                        console.log("[PTZ] ← 左转开始")
+                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 23, 0)
+                    }
+                    onReleased: {
+                        console.log("[PTZ] ← 左转停止")
+                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 23, 1)
+                    }
+
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: width / 2
+                        color: leftArea.pressed ? Qt.rgba(255,255,255,0.6) : Qt.rgba(255,255,255,0.2)
+                    }
+                }
+
+                // =======================
+                // 右方向
+                // =======================
+                MouseArea {
+                    id: rightArea
+                    anchors.centerIn: parent
+                    width: parent.width * 0.2
+                    height: parent.height * 0.4
+                    anchors.horizontalCenterOffset: parent.width * 0.35
+                    hoverEnabled: true
+
+                    onPressed: {
+                        console.log("[PTZ] → 右转开始")
+                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 24, 0)
+                    }
+                    onReleased: {
+                        console.log("[PTZ] → 右转停止")
+                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 24, 1)
+                    }
+
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: width / 2
+                        color: rightArea.pressed ? Qt.rgba(255,255,255,0.6) : Qt.rgba(255,255,255,0.2)
+                    }
+                }
+
+                // =======================
+                // 中心按钮（复位）
+                // =======================
+                MouseArea {
+                    id: centerButton
+                    anchors.centerIn: parent
+                    width: parent.width * 0.2
+                    height: parent.height * 0.2
+
+                    onClicked: {
+                        console.log("[PTZ] 复位云台")
+                        // 可根据需要定义复位逻辑
+                    }
+
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: width / 2
+                        color: centerButton.pressed ? Qt.rgba(255,255,255,0.6) : Qt.rgba(255,255,255,0.2)
+                    }
+                    Text {
+                        anchors.centerIn: parent
+                        text: "●"
+                        color: "white"
+                        font.pixelSize: 20
+                    }
+                }
+
+                // =======================
+                // 放大 / 缩小按钮
+                // =======================
+                Column {
+                    anchors {
+                        left: parent.left
+                        verticalCenter: parent.verticalCenter
+                        leftMargin: -60
+                    }
+                    spacing: 8
+
+                    // ---------- 放大按钮 ----------
+                    Rectangle {
+                        id: zoomInButton
+                        width: 44
+                        height: 44
+                        radius: 22
+                        color: zoomInArea.pressed ? Qt.rgba(255,255,255,0.25) : Qt.rgba(0,0,0,0.3)
+                        border.color: "white"
+                        border.width: 1
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: "+"
+                            color: "white"
+                            font.pixelSize: 22
+                        }
+
+                        MouseArea {
+                            id: zoomInArea
+                            anchors.fill: parent
+                            onPressed: {
+                                console.log("[PTZ] 放大开始")
+                                 console.log("userIDCtrl,channelCtr", QGroundControl.androidHCNetSDK.userIDCtrl, QGroundControl.androidHCNetSDK.channelCtrl)
+                                QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 11, 0)
+                            }
+                            onReleased: {
+                                console.log("[PTZ] 放大停止")
+                                console.log("userIDCtrl,channelCtr", QGroundControl.androidHCNetSDK.userIDCtrl, QGroundControl.androidHCNetSDK.channelCtrl)
+
+                                QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 11, 1)
+                            }
+                        }
+                    }
+
+                    // ---------- 缩小按钮 ----------
+                    Rectangle {
+                        id: zoomOutButton
+                        width: 44
+                        height: 44
+                        radius: 22
+                        color: zoomOutArea.pressed ? Qt.rgba(255,255,255,0.25) : Qt.rgba(0,0,0,0.3)
+                        border.color: "white"
+                        border.width: 1
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: "-"
+                            color: "white"
+                            font.pixelSize: 22
+                        }
+
+                        MouseArea {
+                            id: zoomOutArea
+                            anchors.fill: parent
+                            onPressed: {
+                                console.log("[PTZ] 缩小开始")
+                                QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 12, 0)
+                            }
+                            onReleased: {
+                                console.log("[PTZ] 缩小停止")
+                                QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 12, 1)
+                            }
+                        }
+                    }
+                }
+            }
+
         }
 
         FlyViewCustomLayer {

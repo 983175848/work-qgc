@@ -16,6 +16,7 @@
 #include <QtQmlIntegration/QtQmlIntegration>
 
 #include "QmlUnitsConversion.h"
+//#include "../Android/HCNetSDK/AndroidHCNetSDKInterface.h"
 
 Q_DECLARE_LOGGING_CATEGORY(GuidedActionsControllerLog)
 
@@ -32,6 +33,10 @@ class SettingsManager;
 class VideoManager;
 class UTMSPManager;
 class AirLinkManager;
+#ifdef Q_OS_ANDROID
+class AndroidHCNetSDKInterface; //海康sdk单例
+#endif
+
 
 Q_MOC_INCLUDE("ADSBVehicleManager.h")
 Q_MOC_INCLUDE("FactGroup.h")
@@ -49,6 +54,9 @@ Q_MOC_INCLUDE("UTMSPManager.h")
 #endif
 #ifndef QGC_AIRLINK_DISABLED
 Q_MOC_INCLUDE("AirLinkManager.h")
+#endif
+#ifdef Q_OS_ANDROID
+Q_MOC_INCLUDE("AndroidHCNetSDKInterface.h") //海康sdk单例
 #endif
 
 class QGroundControlQmlGlobal : public QObject
@@ -77,6 +85,9 @@ public:
     Q_PROPERTY(QGCMapEngineManager* mapEngineManager        READ    mapEngineManager        CONSTANT)
     Q_PROPERTY(QGCPositionManager*  qgcPositionManger       READ    qgcPositionManger       CONSTANT)
     Q_PROPERTY(VideoManager*        videoManager            READ    videoManager            CONSTANT)
+#ifdef Q_OS_ANDROID
+    Q_PROPERTY(AndroidHCNetSDKInterface* androidHCNetSDK    READ    androidHCNetSDK         CONSTANT)     //海康sdk单例
+#endif   
     Q_PROPERTY(SettingsManager*     settingsManager         READ    settingsManager         CONSTANT)
     Q_PROPERTY(ADSBVehicleManager*  adsbVehicleManager      READ    adsbVehicleManager      CONSTANT)
     Q_PROPERTY(QGCCorePlugin*       corePlugin              READ    corePlugin              CONSTANT)
@@ -170,6 +181,9 @@ public:
     QGCPositionManager*     qgcPositionManger   ()  { return _qgcPositionManager; }
     MissionCommandTree*     missionCommandTree  ()  { return _missionCommandTree; }
     VideoManager*           videoManager        ()  { return _videoManager; }
+#ifdef Q_OS_ANDROID
+    AndroidHCNetSDKInterface* androidHCNetSDK   ()  { return _androidHCNetSDK; }    //海康sdk单例
+#endif
     QGCCorePlugin*          corePlugin          ()  { return _corePlugin; }
     SettingsManager*        settingsManager     ()  { return _settingsManager; }
 #ifndef QGC_NO_SERIAL_LINK
@@ -249,6 +263,9 @@ private:
     QGCPositionManager*     _qgcPositionManager     = nullptr;
     MissionCommandTree*     _missionCommandTree     = nullptr;
     VideoManager*           _videoManager           = nullptr;
+#ifdef Q_OS_ANDROID
+    AndroidHCNetSDKInterface* _androidHCNetSDK      = nullptr;  //海康sdk单例
+#endif
     LinkManager*            _linkManager            = nullptr;
     MultiVehicleManager*    _multiVehicleManager    = nullptr;
     SettingsManager*        _settingsManager        = nullptr;

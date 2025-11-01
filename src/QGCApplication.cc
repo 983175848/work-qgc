@@ -47,7 +47,9 @@
 #include "Vehicle.h"
 #include "VehicleComponent.h"
 #include "VideoManager.h"
-
+#ifdef Q_OS_ANDROID
+#include "AndroidHCNetSDKInterface.h"
+#endif
 #ifndef QGC_NO_SERIAL_LINK
 #include "SerialLink.h"
 #endif
@@ -214,6 +216,8 @@ void QGCApplication::init()
         qCDebug(QGCApplicationLog) << "Setting MAVLink System ID to:" << _systemId;
         SettingsManager::instance()->mavlinkSettings()->gcsMavlinkSystemID()->setRawValue(_systemId);
     }
+
+    _initAndroidSDK();
 
     // Although this should really be in _initForNormalAppBoot putting it here allowws us to create unit tests which pop up more easily
     if (QFontDatabase::addApplicationFont(":/fonts/opensans") < 0) {
@@ -661,9 +665,40 @@ QGCImageProvider *QGCApplication::qgcImageProvider()
     return dynamic_cast<QGCImageProvider*>(_qmlAppEngine->imageProvider(_qgcImageProviderId));
 }
 
+
+void QGCApplication::_initAndroidSDK()
+{
+#ifdef Q_OS_ANDROID
+    qCDebug(QGCApplicationLog) << "Initializing Android HCNetSDK";
+    if (AndroidHCNetSDKInterface::instance()) {
+        if (!AndroidHCNetSDKInterface::instance()->hcNetSDKinit()) {
+            qWarning() << "Failed to initialize HCNetSDK";
+            _androidHCNetSDKInitialized = true;
+        } else {
+            qDebug() << "HCNetSDK initialized successfully";
+            _androidHCNetSDKInitialized = true;
+        }
+    }
+   //  int loginID = AndroidHCNetSDKInterface::instance()->hcNetSDKLoginV40();
+   //  if (loginID < 0) {
+   //      qWarning() << "[HCNetSDK] Login failed! userID =" << loginID;
+   //      _androidHCNetSDKInitialized = false;
+   //      return;
+   //  }
+   // AndroidHCNetSDKInterface::instance()->userID = loginID;
+
+#endif
+}
+
+
 void QGCApplication::shutdown()
 {
-    qCDebug(QGCApplicationLog) << "Exit";
+#ifdef Q_OS_ANDROID
+    // Cleanup Android SDK
+    if (_androidHCNetSDKInitialized) {
+        AndroidHCNetSDKInterface::instance()->hcNetSDKcleanUp();
+    }
+#endif
 
     if (_videoManagerInitialized) {
         VideoManager::instance()->cleanup();

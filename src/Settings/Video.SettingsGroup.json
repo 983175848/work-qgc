@@ -25,6 +25,13 @@
     "default":     ""
 },
 {
+    "name": "rtspIp",
+    "shortDesc": "RTSP IP Address",
+    "longDesc": "IP address of the RTSP video stream source.",
+    "type": "string",
+    "default": ""
+},
+{
     "name":             "rtsp1Url",
     "shortDesc": "Video RTSP1 Url",
     "longDesc":  "RTSP1 url address and port to bind to for video stream. Example: rtsp://192.168.42.1:554/live",
