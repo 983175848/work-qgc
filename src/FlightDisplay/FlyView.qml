@@ -134,35 +134,40 @@ Item {
             visible:                !QGroundControl.videoManager.fullScreen
             utmspActTrigger:        utmspSendActTrigger
             isViewer3DOpen:         viewer3DWindow.isOpen
-            // 云台控制
             Item {
                 id: gimbalControl
-                width: 140
-                height: 140
+
+                // 动态宽度和高度，按钮的大小会随着父级容器大小变化
+                //width: parent.width * 0.15  // 设置为父容器宽度的 15%
+                height: parent.height * 0.15  // 设置为父容器高度的 15%
+                width: gimbalControl.height  // 设置为父容器宽度的 15%
+
                 anchors {
-                    right: parent.right
-                    bottom: parent.bottom
-                    bottomMargin: 100
-                    rightMargin: 24
+                    right: parent.right  // 右侧锚定
+                    bottom: parent.bottom  // 底部锚定
+                    bottomMargin: parent.height * 0.15  // 底部与父级的距离
+                    rightMargin: parent.width * 0.01  // 右侧与父级的距离
                 }
-                z: 999
-                visible: true
+
+                z: 999  // 确保按钮在最上层显示
+                visible: true  // 控件始终可见
 
                 // 绘制圆形背景
                 Canvas {
                     id: circleCanvas
-                    anchors.fill: parent
+                    width: Math.max(parent.width, 100)  // 设置最小宽度为 100px
+                    height: Math.max(parent.height, 100)  // 设置最小高度为 100px
+                    anchors.fill: parent  // 画布大小与父级控件相同
                     onPaint: {
                         var ctx = getContext("2d")
-                        ctx.clearRect(0, 0, width, height)
-                        var centerX = width / 2
-                        var centerY = height / 2
-                        var radius = width / 2
-
-                        // 半透明圆形背景
+                        ctx.clearRect(0, 0, width, height)  // 清空画布
+                        var centerX = width / 2  // 圆心 X 坐标
+                        var centerY = height / 2  // 圆心 Y 坐标
+                        // 设置最小圆形半径
+                        var radius = Math.min(width, height) / 2 // 使用 Math.min 保证半径适应父容器的最小边
                         ctx.beginPath()
                         ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI)
-                        ctx.fillStyle = Qt.rgba(0, 0, 0, 0.3)
+                        ctx.fillStyle = Qt.rgba(0, 0, 0, 0.3)  // 背景色：半透明黑色
                         ctx.fill()
                     }
                 }
@@ -172,25 +177,26 @@ Item {
                 // =======================
                 MouseArea {
                     id: upArea
-                    anchors.centerIn: parent
+                    anchors.centerIn: parent  // 按钮中心锚定到父级
                     width: parent.width * 0.4
                     height: parent.height * 0.2
-                    anchors.verticalCenterOffset: -parent.height * 0.35
-                    hoverEnabled: true
+                    anchors.verticalCenterOffset: -parent.height * 0.35  // 上移，靠近顶部
+
+                    hoverEnabled: true  // 启用鼠标悬停效果
 
                     onPressed: {
                         console.log("[PTZ] ↑ 上仰开始")
-                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 21, 0)
+                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl, QGroundControl.androidHCNetSDK.channelCtrl, 21, 0)
                     }
                     onReleased: {
                         console.log("[PTZ] ↑ 上仰停止")
-                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 21, 1)
+                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl, QGroundControl.androidHCNetSDK.channelCtrl, 21, 1)
                     }
 
                     Rectangle {
-                        anchors.fill: parent
-                        radius: width / 2
-                        color: upArea.pressed ? Qt.rgba(255,255,255,0.6) : Qt.rgba(255,255,255,0.2)
+                        anchors.fill: parent  // 按钮背景填满 MouseArea
+                        radius: width / 2  // 圆形按钮
+                        color: upArea.pressed ? Qt.rgba(255,255,255,0.6) : Qt.rgba(255,255,255,0.2)  // 按钮按下时变色
                     }
                 }
 
@@ -199,25 +205,26 @@ Item {
                 // =======================
                 MouseArea {
                     id: downArea
-                    anchors.centerIn: parent
+                    anchors.centerIn: parent  // 按钮中心锚定到父级
                     width: parent.width * 0.4
                     height: parent.height * 0.2
-                    anchors.verticalCenterOffset: parent.height * 0.35
-                    hoverEnabled: true
+                    anchors.verticalCenterOffset: parent.height * 0.35  // 下移，靠近底部
+
+                    hoverEnabled: true  // 启用鼠标悬停效果
 
                     onPressed: {
                         console.log("[PTZ] ↓ 下俯开始")
-                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 22, 0)
+                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl, QGroundControl.androidHCNetSDK.channelCtrl, 22, 0)
                     }
                     onReleased: {
                         console.log("[PTZ] ↓ 下俯停止")
-                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 22, 1)
+                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl, QGroundControl.androidHCNetSDK.channelCtrl, 22, 1)
                     }
 
                     Rectangle {
-                        anchors.fill: parent
-                        radius: width / 2
-                        color: downArea.pressed ? Qt.rgba(255,255,255,0.6) : Qt.rgba(255,255,255,0.2)
+                        anchors.fill: parent  // 按钮背景填满 MouseArea
+                        radius: width / 2  // 圆形按钮
+                        color: downArea.pressed ? Qt.rgba(255,255,255,0.6) : Qt.rgba(255,255,255,0.2)  // 按钮按下时变色
                     }
                 }
 
@@ -226,25 +233,26 @@ Item {
                 // =======================
                 MouseArea {
                     id: leftArea
-                    anchors.centerIn: parent
+                    anchors.centerIn: parent  // 按钮中心锚定到父级
                     width: parent.width * 0.2
                     height: parent.height * 0.4
-                    anchors.horizontalCenterOffset: -parent.width * 0.35
-                    hoverEnabled: true
+                    anchors.horizontalCenterOffset: -parent.width * 0.35  // 左移，靠近左侧
+
+                    hoverEnabled: true  // 启用鼠标悬停效果
 
                     onPressed: {
                         console.log("[PTZ] ← 左转开始")
-                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 23, 0)
+                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl, QGroundControl.androidHCNetSDK.channelCtrl, 23, 0)
                     }
                     onReleased: {
                         console.log("[PTZ] ← 左转停止")
-                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 23, 1)
+                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl, QGroundControl.androidHCNetSDK.channelCtrl, 23, 1)
                     }
 
                     Rectangle {
-                        anchors.fill: parent
-                        radius: width / 2
-                        color: leftArea.pressed ? Qt.rgba(255,255,255,0.6) : Qt.rgba(255,255,255,0.2)
+                        anchors.fill: parent  // 按钮背景填满 MouseArea
+                        radius: width / 2  // 圆形按钮
+                        color: leftArea.pressed ? Qt.rgba(255,255,255,0.6) : Qt.rgba(255,255,255,0.2)  // 按钮按下时变色
                     }
                 }
 
@@ -253,25 +261,26 @@ Item {
                 // =======================
                 MouseArea {
                     id: rightArea
-                    anchors.centerIn: parent
+                    anchors.centerIn: parent  // 按钮中心锚定到父级
                     width: parent.width * 0.2
                     height: parent.height * 0.4
-                    anchors.horizontalCenterOffset: parent.width * 0.35
-                    hoverEnabled: true
+                    anchors.horizontalCenterOffset: parent.width * 0.35  // 右移，靠近右侧
+
+                    hoverEnabled: true  // 启用鼠标悬停效果
 
                     onPressed: {
                         console.log("[PTZ] → 右转开始")
-                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 24, 0)
+                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl, QGroundControl.androidHCNetSDK.channelCtrl, 24, 0)
                     }
                     onReleased: {
                         console.log("[PTZ] → 右转停止")
-                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 24, 1)
+                        QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl, QGroundControl.androidHCNetSDK.channelCtrl, 24, 1)
                     }
 
                     Rectangle {
-                        anchors.fill: parent
-                        radius: width / 2
-                        color: rightArea.pressed ? Qt.rgba(255,255,255,0.6) : Qt.rgba(255,255,255,0.2)
+                        anchors.fill: parent  // 按钮背景填满 MouseArea
+                        radius: width / 2  // 圆形按钮
+                        color: rightArea.pressed ? Qt.rgba(255,255,255,0.6) : Qt.rgba(255,255,255,0.2)  // 按钮按下时变色
                     }
                 }
 
@@ -280,9 +289,9 @@ Item {
                 // =======================
                 MouseArea {
                     id: centerButton
-                    anchors.centerIn: parent
-                    width: parent.width * 0.2
-                    height: parent.height * 0.2
+                    anchors.centerIn: parent  // 按钮中心锚定到父级
+                    width: Math.min(parent.width * 0.2, parent.height * 0.2)  // 按钮的宽度为背景圆形的 20%
+                    height: width  // 高度与宽度相同，保持圆形
 
                     onClicked: {
                         console.log("[PTZ] 复位云台")
@@ -290,17 +299,20 @@ Item {
                     }
 
                     Rectangle {
-                        anchors.fill: parent
-                        radius: width / 2
-                        color: centerButton.pressed ? Qt.rgba(255,255,255,0.6) : Qt.rgba(255,255,255,0.2)
+                        anchors.fill: parent  // 按钮背景填满 MouseArea
+                        radius: width / 2  // 圆形按钮
+                        color: centerButton.pressed ? Qt.rgba(255,255,255,0.6) : Qt.rgba(255,255,255,0.2)  // 按钮按下时变色
                     }
                     Text {
                         anchors.centerIn: parent
-                        text: "●"
+                        text: "●"  // 圆形中间显示的符号
                         color: "white"
                         font.pixelSize: 20
                     }
                 }
+
+
+
 
                 // =======================
                 // 放大 / 缩小按钮
@@ -335,13 +347,10 @@ Item {
                             anchors.fill: parent
                             onPressed: {
                                 console.log("[PTZ] 放大开始")
-                                 console.log("userIDCtrl,channelCtr", QGroundControl.androidHCNetSDK.userIDCtrl, QGroundControl.androidHCNetSDK.channelCtrl)
                                 QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 11, 0)
                             }
                             onReleased: {
                                 console.log("[PTZ] 放大停止")
-                                console.log("userIDCtrl,channelCtr", QGroundControl.androidHCNetSDK.userIDCtrl, QGroundControl.androidHCNetSDK.channelCtrl)
-
                                 QGroundControl.androidHCNetSDK.hcNetSDKPTZControlOther(QGroundControl.androidHCNetSDK.userIDCtrl,QGroundControl.androidHCNetSDK.channelCtrl, 11, 1)
                             }
                         }
@@ -379,7 +388,6 @@ Item {
                     }
                 }
             }
-
         }
 
         FlyViewCustomLayer {
