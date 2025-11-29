@@ -136,6 +136,10 @@ private:
 
     void _initVideo();
 
+
+    void _initAndroidSDK();
+
+
     /// Initialize the application for normal application boot. Or in other words we are not going to run unit tests.
     void _initForNormalAppBoot();
 
@@ -165,6 +169,7 @@ private:
     bool _showErrorsInToolbar = false;
     QElapsedTimer _msecsElapsedTime;
     bool _videoManagerInitialized = false;
+    bool _androidHCNetSDKInitialized = false;    //海康sdk
 
     QList<QPair<QString /* title */, QString /* message */>> _delayedAppMessages;
 

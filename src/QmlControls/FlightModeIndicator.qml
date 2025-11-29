@@ -47,7 +47,7 @@ Item {
             color:                  qgcPal.windowTransparentText
             source:                 "/qmlimages/FlightModesComponentIcon.png"
         }
-
+        // 当前飞行模式文本
         QGCLabel {
             id:                 flightModeLabel
             text:               activeVehicle ? activeVehicle.flightMode : qsTr("N/A", "No data to display")
@@ -160,7 +160,7 @@ Item {
                 RowLayout {
                     spacing: ScreenTools.defaultFontPixelWidth
                     visible: editMode || !hiddenFlightModesList.find(item => { return item === modelData } )
-
+                    // 模式按钮
                     QGCDelayButton {
                         id:                 modeButton
                         text:               modelData

@@ -1,0 +1,18 @@
+"Airmode (disable during tuning) &lt;b&gt;&lt;a href=&quot;https://docs.px4.io/main/en/config_mc/pid_tuning_guide_multicopter.html#airmode-mixer-saturation&quot;&gt;?&lt;/a&gt;&lt;/b&gt;": "TODO",
+"Thrust curve &lt;b&gt;&lt;a href=&quot;https://docs.px4.io/main/en/config_mc/pid_tuning_guide_multicopter.html#thrust-curve&quot;&gt;?&lt;/a&gt;&lt;/b&gt;": "TODO",
+"Move &apos;%1&apos; %2 to the %3 location. %4": "TODO",
+"&lt;br /&gt;No motors are assigned yet.
+By saying yes, all motors will be assigned to the first %1 channels of the selected output (%2)
+ (you can also first assign all motors, then start the identification).&lt;br /&gt;": "TODO",
+"UTM projection is not in supported format. Must be PROJCS[&quot;WGS_1984_UTM_Zone_##N/S": "TODO",
+"This will automatically spin individual motors at 15% thrust.&lt;br /&gt;&lt;br /&gt;
+&lt;b&gt;Warning: Only proceed if you removed all propellers&lt;/b&gt;.&lt;br /&gt;
+%1
+&lt;br /&gt;
+The procedure is as following:&lt;br /&gt;
+- After confirming, the first motor starts to spin for 0.5 seconds.&lt;br /&gt;
+- Then click on the motor that was spinning.&lt;br /&gt;
+- The above steps are repeated for all motors.&lt;br /&gt;
+- The motor output functions will automatically be reassigned by the selected order.&lt;br /&gt;
+&lt;br /&gt;
+Do you wish to proceed?": "TODO",
