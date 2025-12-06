@@ -78,6 +78,7 @@ SettingsPage {
         QGCLabel {
             text: qsTr("RTSP1")
             color: qgcPal.text
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
             //Layout.alignment: Qt.AlignVCenter
         }
 
@@ -112,7 +113,6 @@ SettingsPage {
                 id: streamSwitch1
                 Layout.alignment: Qt.AlignVCenter
                 text: checked ? qsTr("Main") : qsTr("Sub")
-
                 // 组件加载时执行一次
                 Component.onCompleted: {
                     var val = Number(_videoSettings.rtsp1StreamNo.value)
@@ -172,12 +172,14 @@ SettingsPage {
         QGCLabel {      //用于换行
             //text: qsTr("RTSP2")
             color: qgcPal.text
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
             //Layout.alignment: Qt.AlignVCenter
         }
 
         QGCLabel {
             text: qsTr("RTSP2")
             color: qgcPal.text
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
             //Layout.alignment: Qt.AlignVCenter
         }
 
@@ -269,12 +271,14 @@ SettingsPage {
         QGCLabel {      //用于换行
             //text: qsTr("RTSP2")
             color: qgcPal.text
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
             //Layout.alignment: Qt.AlignVCenter
         }
 
         QGCLabel {
             text: qsTr("RTSP3")
             color: qgcPal.text
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
             //Layout.alignment: Qt.AlignVCenter
         }
         // RTSP3
@@ -364,12 +368,14 @@ SettingsPage {
         QGCLabel {      //用于换行
             //text: qsTr("RTSP2")
             color: qgcPal.text
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
             //Layout.alignment: Qt.AlignVCenter
         }
 
         QGCLabel {
             text: qsTr("RTSP4")
             color: qgcPal.text
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
             //Layout.alignment: Qt.AlignVCenter
         }
         // RTSP4
@@ -460,12 +466,14 @@ SettingsPage {
         QGCLabel {      //用于换行
             //text: qsTr("RTSP2")
             color: qgcPal.text
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
             //Layout.alignment: Qt.AlignVCenter
         }
 
         QGCLabel {
             text: qsTr("RTSP5")
             color: qgcPal.text
+            visible: _isRTSP && _videoSettings.rtspUrl.visible
             //Layout.alignment: Qt.AlignVCenter
         }
         // RTSP5

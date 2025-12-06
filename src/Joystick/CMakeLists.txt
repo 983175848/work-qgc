@@ -13,6 +13,8 @@ if(ANDROID)
         PRIVATE
             JoystickAndroid.cc
             JoystickAndroid.h
+            JoystickRCSDK.cc
+            JoystickRCSDK.h
     )
     return()
 endif()

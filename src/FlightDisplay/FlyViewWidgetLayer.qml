@@ -65,7 +65,7 @@ Item {
         topEdgeRightInset:      topRightPanel.topEdgeRightInset
         bottomEdgeLeftInset:    virtualJoystickMultiTouch.visible ? virtualJoystickMultiTouch.bottomEdgeLeftInset : parentToolInsets.bottomEdgeLeftInset
         bottomEdgeCenterInset:  bottomRightRowLayout.bottomEdgeCenterInset
-        bottomEdgeRightInset:   virtualJoystickMultiTouch.visible ? virtualJoystickMultiTouch.bottomEdgeRightInset : bottomRightRowLayout.bottomEdgeRightInset
+        bottomEdgeRightInset:   gimbalControl.visible ? (bottomRightRowLayout.bottomEdgeRightInset + gimbalControl.height * 2 + _layoutMargin) : (virtualJoystickMultiTouch.visible ? virtualJoystickMultiTouch.bottomEdgeRightInset : bottomRightRowLayout.bottomEdgeRightInset)
     }
 
     FlyViewTopRightPanel {
@@ -74,8 +74,7 @@ Item {
         anchors.right:          parent.right
         anchors.topMargin:      _layoutMargin
         anchors.rightMargin:    _layoutMargin
-        maximumHeight:          parent.height - (bottomRightRowLayout.height + _margins * 5)
-
+        maximumHeight:          parent.height - (bottomRightRowLayout.height + (gimbalControl.visible ? gimbalControl.height * 2  + _layoutMargin : 0) + _margins * 5)
         property real topEdgeRightInset:    height + _layoutMargin
         property real rightEdgeTopInset:    width + _layoutMargin
         property real rightEdgeCenterInset: rightEdgeTopInset
@@ -222,5 +221,19 @@ Item {
         id: preFlightChecklistPopup
         FlyViewPreFlightChecklistPopup {
         }
+    }
+
+    GimbalControlWidget {
+        id: gimbalControl
+
+        width:  bottomRightRowLayout.width / 4
+        height: width
+
+        anchors.right:          bottomRightRowLayout.right
+        anchors.bottom:         bottomRightRowLayout.top
+        anchors.bottomMargin:   _layoutMargin
+
+        z: QGroundControl.zOrderTopMost
+        visible: ScreenTools.isAndroid
     }
 }

@@ -70,11 +70,7 @@ public:
     int userID5;                       // 保存登录句柄5  该用户ID具有唯一性，后续对设备的操作都需要通过此ID实现。
 
 
-
-
-
     QJniObject hcNetSDKInstance;        // 保存 HCNetSDK 实例，即使多个摄像头也只需要一个实例,全局仅保留一个
-
 
     // getter / setter
     int userIDCtrl() const { return m_userIDCtrl; }

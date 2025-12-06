@@ -14,6 +14,7 @@
     #include "JoystickSDL.h"
 #elif defined(Q_OS_ANDROID)
     #include "JoystickAndroid.h"
+    #include "JoystickRCSDK.h"
 #endif
 #include "QGCLoggingCategory.h"
 
@@ -58,9 +59,13 @@ void JoystickManager::init()
     }
     _setActiveJoystickFromSettings();
 #elif defined(Q_OS_ANDROID)
-    if (!JoystickAndroid::init()) {
-        return;
-    }
+    // if (!JoystickAndroid::init()) {
+    //     return;
+    // }
+    // 初始化 RCSDK
+    qCDebug(JoystickManagerLog) << "JoystickRCSDK::init()";
+    JoystickRCSDK::init();
+    qCDebug(JoystickManagerLog) << "JoystickRCSDK::init() end";
     (void) connect(this, &JoystickManager::updateAvailableJoysticksSignal, this, [this]() {
         _joystickCheckTimerCounter = 5;
         _joystickCheckTimer.start();
@@ -78,9 +83,13 @@ void JoystickManager::_setActiveJoystickFromSettings()
 #ifdef QGC_SDL_JOYSTICK
     newMap = JoystickSDL::discover();
 #elif defined(Q_OS_ANDROID)
-    newMap = JoystickAndroid::discover();
+    //newMap = JoystickAndroid::discover();
+    newMap = JoystickRCSDK::discover();
+    //newMap.unite(JoystickAndroid::discover());
+    // Qt 6: 使用 insert 代替 unite
+    //QMap<QString, Joystick*> rcsdkMap = JoystickRCSDK::discover();
+    //newMap.insert(rcsdkMap);
 #endif
-
     if (_activeJoystick && !newMap.contains(_activeJoystick->name())) {
         qCDebug(JoystickManagerLog) << "Active joystick removed";
         setActiveJoystick(nullptr);

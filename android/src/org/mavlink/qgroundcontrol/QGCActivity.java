@@ -47,7 +47,12 @@ public class QGCActivity extends QtActivity {
         keepScreenOn();
         setupMulticastLock();
 
-        QGCUsbSerialManager.initialize(this);
+        // 确保 USB 管理器在应用初始化时被设置 // 修改UsbManager.getDeviceList()报错
+        try {
+            QGCUsbSerialManager.initialize(this);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to initialize QGCUsbSerialManager", e);
+        }
     }
 
     @Override

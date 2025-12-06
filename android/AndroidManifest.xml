@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionCode="-- %%INSERT_VERSION_CODE%% --" android:versionName="-- %%INSERT_VERSION_NAME%% --">
 
     <!-- %%INSERT_PERMISSIONS -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- rcsdk 使用 -->
 
     <uses-permission android:name="android.permission.USB_PERMISSION"/>
     <!-- Need MulticastLock to receive broadcast UDP packets -->

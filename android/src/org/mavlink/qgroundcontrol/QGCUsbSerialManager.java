@@ -211,6 +211,10 @@ public class QGCUsbSerialManager {
      * @param device The UsbDevice to add or update.
      */
     private static void addOrUpdateDevice(UsbDevice device) {
+        if (usbManager == null) { // 修改UsbManager.getDeviceList()报错
+            QGCLogger.w(TAG, "UsbManager not initialized in addOrUpdateDevice");
+            return;
+        }
         UsbSerialDriver driver = findDriverByDeviceId(device.getDeviceId());
         if (driver != null) {
             if (usbManager.hasPermission(device)) {
@@ -337,6 +341,10 @@ public class QGCUsbSerialManager {
         deviceResourcesMap.put(device.getDeviceId(), new UsbDeviceResources(newDriver));
         QGCLogger.i(TAG, "Adding new driver for device ID " + device.getDeviceId() + ": " + deviceName);
 
+        if (usbManager == null) {// 修改UsbManager.getDeviceList()报错
+            QGCLogger.w(TAG, "UsbManager not initialized when trying to request permission");
+            return;
+        }
         if (usbManager.hasPermission(device)) {
             QGCLogger.i(TAG, "Already have permission to use device " + deviceName);
         } else {
@@ -412,6 +420,12 @@ public class QGCUsbSerialManager {
      */
     public static String[] availableDevicesInfo() {
         // updateCurrentDrivers();
+
+        // 添加空值检查，防止 NullPointerException
+        if (usbManager == null) {// 修改UsbManager.getDeviceList()报错
+            Log.w(TAG, "UsbManager not initialized. Call initialize() first.");
+            return null;
+        }
 
         if (usbManager.getDeviceList().size() < 1) {
             return null;
@@ -500,6 +514,11 @@ public class QGCUsbSerialManager {
      * @return True if successful, false otherwise.
      */
     private static boolean openDriver(final UsbSerialPort port, final UsbDevice device, final int deviceId, final long classPtr) {
+        if (usbManager == null) {// 修改UsbManager.getDeviceList()报错
+            QGCLogger.e(TAG, "UsbManager not initialized when trying to open device");
+            nativeDeviceException(classPtr, "UsbManager not initialized");
+            return false;
+        }
         UsbDeviceConnection connection = usbManager.openDevice(device);
         if (connection == null) {
             QGCLogger.w(TAG, "No Usb Device Connection");
