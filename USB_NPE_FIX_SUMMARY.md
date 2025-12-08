@@ -15,7 +15,7 @@ at org.mavlink.qgroundcontrol.QGCUsbSerialManager.availableDevicesInfo(QGCUsbSer
 
 `UsbManager` 静态成员变量为 `null`，导致在调用其方法时产生 `NullPointerException`。
 
-可能的原因：
+可能的原因：+
 1. **时序问题**：Qt 层在 Java 初始化完成前就调用了 USB 相关方法
 2. **初始化失败**：Context 服务获取失败
 3. **条件竞争**：多线程访问未初始化的 `usbManager`

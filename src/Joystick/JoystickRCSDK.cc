@@ -9,9 +9,9 @@
 QGC_LOGGING_CATEGORY(JoystickRCSDKLog, "qgc.joystick.rcsdk")
 
 // 初始化静态成员变量
-QList<int> JoystickRCSDK::_latestChannels;
-QList<int> JoystickRCSDK::_latestButtons;
-QMutex JoystickRCSDK::_dataMutex;
+QList<int> JoystickRCSDK::_latestChannels;  // 存储最新的通道数据
+QList<int> JoystickRCSDK::_latestButtons;   // 存储最新的按钮状态
+QMutex JoystickRCSDK::_dataMutex;           // 保证 JNI 线程与 QGC 线程的数据安全
 
 // ============================================================================
 // 整体调用逻辑说明 (Architecture Overview)
@@ -55,7 +55,13 @@ QMutex JoystickRCSDK::_dataMutex;
 
 extern "C" {
 
-// 对应 Java: nativeOnChannelsReceived(int[] channels)
+
+/**
+ * @brief JNI 回调方法，接收通道数据并传递给 C++ 类，对应 Java: nativeOnChannelsReceived(int[] channels)
+ * @param env JNIEnv 环境对象
+ * @param clazz 调用该方法的 Java 类
+ * @param channels 包含多个通道 PWM 值的数组
+ */
 JNIEXPORT void JNICALL Java_org_skydroidsdk_RCSDKBridge_nativeOnChannelsReceived(JNIEnv *env, jclass clazz, jintArray channels) {
     Q_UNUSED(clazz);
     jsize len = env->GetArrayLength(channels);
@@ -72,7 +78,15 @@ JNIEXPORT void JNICALL Java_org_skydroidsdk_RCSDKBridge_nativeOnChannelsReceived
     }
 }
 
-// 对应 Java: nativeOnConnectStatus(boolean isConnected)
+
+/**
+ * @brief JNI 回调方法，接收连接状态，并根据状态启动或停止数据轮询。
+ *          对应 Java: nativeOnConnectStatus(boolean isConnected)
+ * @param env JNIEnv 环境对象
+ * @param clazz 调用该方法的 Java 类
+ * @param isConnected 连接状态（true 表示连接成功，false 表示连接断开）
+ */
+
 JNIEXPORT void JNICALL Java_org_skydroidsdk_RCSDKBridge_nativeOnConnectStatus(JNIEnv *env, jclass clazz, jboolean isConnected) {
     Q_UNUSED(env);
     Q_UNUSED(clazz);
@@ -80,17 +94,23 @@ JNIEXPORT void JNICALL Java_org_skydroidsdk_RCSDKBridge_nativeOnConnectStatus(JN
     
     if (isConnected) {
         // 关键逻辑：连接成功后，通知 Java 层开始轮询通道数据
-        // 100ms 是一个经验值，既保证流畅度又不至于让 Java 层负载过高
+        // 50ms 是一个经验值，既保证流畅度又不至于让 Java 层负载过高
         QJniObject::callStaticMethod<void>(
             "org/skydroidsdk/RCSDKBridge",
             "startChannelPolling",
             "(I)V",
-            100 
+            50
         );
     }
 }
 
-// 对应 Java: nativeOnLog(String message)
+
+/**
+ * @brief JNI 回调方法，接收来自 Java 的日志消息，对应 Java: nativeOnLog(String message)
+ * @param env JNIEnv 环境对象
+ * @param clazz 调用该方法的 Java 类
+ * @param message 日志消息
+ */
 JNIEXPORT void JNICALL Java_org_skydroidsdk_RCSDKBridge_nativeOnLog(JNIEnv *env, jclass clazz, jstring message) {
     Q_UNUSED(clazz);
     const char *nativeString = env->GetStringUTFChars(message, 0);
@@ -103,7 +123,12 @@ JNIEXPORT void JNICALL Java_org_skydroidsdk_RCSDKBridge_nativeOnSignalQualityRec
 JNIEXPORT void JNICALL Java_org_skydroidsdk_RCSDKBridge_nativeOnDataReceived(JNIEnv *env, jclass clazz, jbyteArray data) { Q_UNUSED(env); Q_UNUSED(clazz); Q_UNUSED(data); }
 JNIEXPORT void JNICALL Java_org_skydroidsdk_RCSDKBridge_nativeOnControlModeReceived(JNIEnv *env, jclass clazz, jint mode) { Q_UNUSED(env); Q_UNUSED(clazz); Q_UNUSED(mode); }
 
-// 对应 Java: nativeOnButtonsReceived(int[] buttons)
+/**
+ * @brief JNI 回调方法，接收来自 Java 的按钮状态。对应 Java: nativeOnButtonsReceived(int[] buttons)
+ * @param env JNIEnv 环境对象
+ * @param clazz 调用该方法的 Java 类
+ * @param buttons 按钮状态数组，1 表示按下，0 表示释放
+ */
 JNIEXPORT void JNICALL Java_org_skydroidsdk_RCSDKBridge_nativeOnButtonsReceived(JNIEnv *env, jclass clazz, jintArray buttons) {
     Q_UNUSED(clazz);
     jsize len = env->GetArrayLength(buttons);
@@ -125,7 +150,14 @@ JNIEXPORT void JNICALL Java_org_skydroidsdk_RCSDKBridge_nativeOnButtonsReceived(
 // ============================================================================
 // JoystickRCSDK 类实现
 // ============================================================================
-
+/**
+ * @brief JoystickRCSDK 构造函数
+ * @param name 设备名称
+ * @param axisCount 轴的数量
+ * @param buttonCount 按钮的数量
+ * @param hatCount HAT 开关的数量
+ * @param parent 父对象
+ */
 JoystickRCSDK::JoystickRCSDK(const QString& name, int axisCount, int buttonCount, int hatCount, QObject* parent)
     : Joystick(name, axisCount, buttonCount, hatCount, parent)
 {
@@ -144,7 +176,10 @@ JoystickRCSDK::JoystickRCSDK(const QString& name, int axisCount, int buttonCount
 JoystickRCSDK::~JoystickRCSDK()
 {
 }
-
+/**
+ * @brief 初始化 RCSDK
+ * @return 如果成功初始化返回 true
+ */
 bool JoystickRCSDK::init()
 {
     // 1. 获取 Android Context
@@ -175,7 +210,10 @@ bool JoystickRCSDK::init()
     
     return true;
 }
-
+/**
+ * @brief 发现并返回所有可用的遥控器设备
+ * @return 包含所有设备的 Map，设备名称为键，Joystick 对象为值
+ */
 QMap<QString, Joystick*> JoystickRCSDK::discover()
 {
     static QMap<QString, Joystick*> ret;
@@ -185,68 +223,111 @@ QMap<QString, Joystick*> JoystickRCSDK::discover()
         // 通道映射:
         // 轴 (0-5):
         //   0-3: 摇杆 (Throttle, Yaw, Pitch, Roll)
-        //   4-5: 拨钮 (Switch 1, Switch 2)
+        //   4-5: 拨钮 (Switch 1, Switch 2) -> 现在用作 HAT 开关
         // 按钮 (0-3):
         //   6-9 -> 按钮 0-3
         // 轴 (6-7):
         //   10-11: 摇杆 (Aux channels)
-        int axisCount = 8;      // 0-5为主要轴，6-7为辅助轴
+        // HAT (0-1):
+        //   4-5: 两个拨钮，每个可以是 4 方向的 POV/HAT
+        int axisCount = 6;      // 0-3为主要轴，4-5用作HAT，6-7为辅助轴
         int buttonCount = 4;    // 4个按钮对应通道6-9
-        ret[name] = new JoystickRCSDK(name, axisCount, buttonCount, 0);
+        int hatCount = 2;       // 2 个 HAT 开关对应通道 4-5
+        ret[name] = new JoystickRCSDK(name, axisCount, buttonCount, hatCount);
         qCDebug(JoystickRCSDKLog) << "Skydroid RCSDK Joystick registered.";
     }
     
     return ret;
 }
 
+/**
+ * @brief 更新遥控器的通道数据
+ * @param channels 包含 16 个通道 PWM 值的列表
+ */
 void JoystickRCSDK::updateRCChannels(const QList<int>& channels)
 {
     QMutexLocker locker(&_dataMutex);
     _latestChannels = channels;
     
-    // // 调试输出：显示所有通道的原始PWM值
-    // static int debugCounter = 0;
-    // if (++debugCounter % 20 == 0) {  // 每20次更新打印一次，避免日志过多
-    //     QString debugMsg = "【云卓遥控器】通道值(PWM): ";
-    //     for (int i = 0; i < qMin(channels.count(), 12); ++i) {
-    //         debugMsg += QString("Ch%1=%2 ").arg(i).arg(channels[i]);
-    //     }
-    //     qCDebug(JoystickRCSDKLog) << debugMsg;
-    // }
+    // 调试输出：显示所有通道的原始PWM值
+    static int debugCounter = 0;
+    if (++debugCounter % 20 == 0) {  // 每20次更新打印一次，避免日志过多
+        QString debugMsg = "【云卓遥控器】通道值(PWM): ";
+        for (int i = 0; i < qMin(channels.count(), 12); ++i) {
+            debugMsg += QString("Ch%1=%2 ").arg(i).arg(channels[i]);
+        }
+        qCDebug(JoystickRCSDKLog) << debugMsg;
+    }
 }
-
+/**
+ * @brief 更新遥控器的按钮状态
+ * @param buttons 按钮状态数组，1表示按下，0表示释放
+ */
 void JoystickRCSDK::updateRCButtons(const QList<int>& buttons)
 {
     QMutexLocker locker(&_dataMutex);
     _latestButtons = buttons;
+    // 调试输出：显示所有按钮的状态（按下或释放）
+    static int debugCounter = 0;  // 用于控制调试输出频率，避免过多的日志
+    if (++debugCounter % 20 == 0) {  // 每 20 次更新打印一次，避免日志过多
+        QString debugMsg = "【云卓遥控器】按钮状态(PWM): ";
+        for (int i = 0; i < buttons.count(); ++i) {
+            debugMsg += QString("Btn%1=%2 ").arg(i).arg(buttons[i] ? "按下" : "释放");  // 根据 PWM 值决定按钮是按下还是释放
+        }
+        qCDebug(JoystickRCSDKLog) << debugMsg;  // 输出调试信息到日志
+    }
 }
 
+/**
+ * @brief 获取指定按钮的状态
+ * @param i 按钮的索引
+ * @return 如果按钮按下返回 true，否则返回 false
+ */
 bool JoystickRCSDK::_getButton(int i) const
 {
     QMutexLocker locker(&_dataMutex);
-    if (i < 0 || i >= 4) {
-        return false;
-    }
-    
+    if (i < 0 || i >= 4) return false;
     // 按钮映射: 通道 6-9 -> 按钮 0-3
     // 这里假设PWM值大于1500表示按下，小于1500表示释放
+   // if (6 + i >= _latestChannels.count()) return false;
     if (6 + i < _latestChannels.count()) {
         int pwm = _latestChannels[6 + i];
-        bool pressed = pwm > 1500;
+        bool pressed = pwm > 1500;  // 修正逻辑：> 1500 才是按下
         
-        // // 调试输出：当按钮状态改变时打印
-        // static bool lastButtonStates[4] = {false, false, false, false};
-        // if (pressed != lastButtonStates[i]) {
-        //     qCDebug(JoystickRCSDKLog) << QString("【云卓遥控器】按钮%1 (通道%2): PWM=%3  →  %4")
-        //         .arg(i).arg(6 + i).arg(pwm).arg(pressed ? "●按下" : "○释放");
-        //     lastButtonStates[i] = pressed;
-        // }
+        // 调试输出：当按钮状态改变时打印
+        static bool lastButtonStates[4] = {false, false, false, false};
+        if (pressed != lastButtonStates[i]) {
+            qCDebug(JoystickRCSDKLog) << QString("【云卓遥控器】按钮%1 (通道%2): PWM=%3  →  %4")
+                .arg(i).arg(6 + i).arg(pwm).arg(pressed ? "●按下" : "○释放");
+            lastButtonStates[i] = pressed;
+        }
         
         return pressed;
     }
+    // static int lastPwm[4]  = { -1, -1, -1, -1 };
+    // static bool pulse[4]   = { false, false, false, false };
+    // constexpr int jitter   = 50; // 抖动阈值，可按需调整
+
+    // int pwm = _latestChannels[6 + i];
+    // if (lastPwm[i] < 0) lastPwm[i] = pwm; // 首次初始化
+
+    // // 只要通道值有明显变化，就生成一次“按下”脉冲
+    // if (qAbs(pwm - lastPwm[i]) > jitter) {
+    //     lastPwm[i] = pwm;
+    //     pulse[i] = true;
+    // }
+
+    // if (pulse[i]) {
+    //     pulse[i] = false;  // 仅在这一帧返回 true，下一帧即 false，相当于一次短按
+    //     return true;
+    // }
     return false;
 }
-
+/**
+ * @brief 获取指定轴的状态
+ * @param i 轴的索引
+ * @return 返回对应轴的映射值，范围为 -32767 到 32767
+ */
 int JoystickRCSDK::_getAxis(int i) const
 {
     QMutexLocker locker(&_dataMutex);
@@ -257,12 +338,12 @@ int JoystickRCSDK::_getAxis(int i) const
     int channelIndex;
     
     // 轴索引映射到通道索引
-    if (i < 6) {
-        // 轴 0-5 对应通道 0-5
+    if (i < 4) {
+        // 轴 0-3 对应通道 0-3
         channelIndex = i;
-    } else if (i < 8) {
-        // 轴 6-7 对应通道 10-11
-        channelIndex = 10 + (i - 6);
+    } else if (4 <= i && i < 6) {
+        // 轴 4-5 对应通道 10-11
+        channelIndex = 10 + (i - 4);
     } else {
         return 0;
     }
@@ -318,3 +399,47 @@ int JoystickRCSDK::_getAxis(int i) const
     
     return value;
 }
+/**
+ * @brief 获取指定 HAT 开关的状态
+ * @param hat HAT 开关的索引
+ * @param i 方向索引（0=上, 1=右, 2=下, 3=左）
+ * @return 如果指定方向被激活返回 true，否则返回 false
+ */
+bool JoystickRCSDK::_getHat(int hat, int i) const
+{
+    QMutexLocker locker(&_dataMutex);
+    
+    // 两个 HAT 开关对应通道 4-5
+    // hat=0 对应通道 4，hat=1 对应通道 5
+    if (hat < 0 || hat >= 2) {
+        return false;
+    }
+    
+    int channelIndex = 4 + hat;
+    if (channelIndex >= _latestChannels.count()) {
+        return false;
+    }
+    
+    int pwm = _latestChannels[channelIndex];
+    
+    // HAT 开关通常有 4 个方向，用参数 i 来表示：
+    // i=0: 上 (North)     - PWM > 1700
+    // i=1: 右 (East)      - PWM > 1500 且 <= 1700  
+    // i=2: 下 (South)     - PWM <= 1300
+    // i=3: 左 (West)      - PWM > 1300 且 <= 1500
+    // 对于拨钮，你可以根据实际情况调整阈值
+    
+    switch (i) {
+        case 0:  // Up
+            return pwm > 1700;
+        case 1:  // Right
+            return pwm > 1500 && pwm <= 1700;
+        case 2:  // Down
+            return pwm <= 1300;
+        case 3:  // Left
+            return pwm > 1300 && pwm <= 1500;
+        default:
+            return false;
+    }
+}
+

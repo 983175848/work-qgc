@@ -63,12 +63,13 @@ private:
 
     bool _getButton(int i) const override;
     int _getAxis(int i) const override;
-    bool _getHat(int hat, int i) const override { Q_UNUSED(hat); Q_UNUSED(i); return false; }
+    bool _getHat(int hat, int i) const override;
 
     // -------------------------------------------------------------------------
     // 内部数据存储
     // -------------------------------------------------------------------------
     static QList<int> _latestChannels; // 存储最新的通道数据
     static QList<int> _latestButtons;  // 存储最新的按钮状态
+
     static QMutex _dataMutex;          // 保证 JNI 线程与 QGC 线程的数据安全
 };

@@ -59,13 +59,36 @@ void JoystickManager::init()
     }
     _setActiveJoystickFromSettings();
 #elif defined(Q_OS_ANDROID)
+
+    bool anyInitOk = false;
+    // 安卓原生手柄
+    if (JoystickAndroid::init()) {
+        anyInitOk = true;
+    } else {
+        qCWarning(JoystickManagerLog) << "JoystickAndroid init failed";
+    }
+    // 云卓遥控器接入
+    if (JoystickRCSDK::init()) {
+        anyInitOk = true;
+    } else {
+        qCWarning(JoystickManagerLog) << "JoystickRCSDK init failed";
+    }
+
+    if (!anyInitOk) {
+        qCWarning(JoystickManagerLog) << "No joystick backends available, abort init";
+        return;
+    }
+
+// 后续 _setActiveJoystickFromSettings()、定时器等逻辑
+
+
     // if (!JoystickAndroid::init()) {
     //     return;
     // }
-    // 初始化 RCSDK
-    qCDebug(JoystickManagerLog) << "JoystickRCSDK::init()";
-    JoystickRCSDK::init();
-    qCDebug(JoystickManagerLog) << "JoystickRCSDK::init() end";
+    // //初始化 RCSDK
+    // qCDebug(JoystickManagerLog) << "JoystickRCSDK::init()";
+    // JoystickRCSDK::init();
+    // qCDebug(JoystickManagerLog) << "JoystickRCSDK::init() end";
     (void) connect(this, &JoystickManager::updateAvailableJoysticksSignal, this, [this]() {
         _joystickCheckTimerCounter = 5;
         _joystickCheckTimer.start();
@@ -83,8 +106,11 @@ void JoystickManager::_setActiveJoystickFromSettings()
 #ifdef QGC_SDL_JOYSTICK
     newMap = JoystickSDL::discover();
 #elif defined(Q_OS_ANDROID)
-    //newMap = JoystickAndroid::discover();
-    newMap = JoystickRCSDK::discover();
+    newMap = JoystickAndroid::discover();
+    const auto rcsdkMap = JoystickRCSDK::discover();
+    for (auto it = rcsdkMap.cbegin(); it != rcsdkMap.cend(); ++it) {
+        newMap.insert(it.key(), it.value());
+    }
     //newMap.unite(JoystickAndroid::discover());
     // Qt 6: 使用 insert 代替 unite
     //QMap<QString, Joystick*> rcsdkMap = JoystickRCSDK::discover();
