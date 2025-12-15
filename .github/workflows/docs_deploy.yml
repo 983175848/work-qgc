@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -39,7 +39,7 @@ jobs:
           touch docs/.vitepress/dist/.nojekyll
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: qgc_docs_build
           path: docs/.vitepress/dist/
@@ -52,7 +52,7 @@ jobs:
 
     steps:
       - name: Download Artifact
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: qgc_docs_build
           path: ~/_book
