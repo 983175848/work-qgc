@@ -28,6 +28,7 @@ QMutex JoystickRCSDK::_dataMutex;           // 保证 JNI 线程与 QGC 线程�
  *    Java 调用 JNI 函数 nativeOnConnectStatus(true)。
  *    C++ 收到连接成功信号 -> 主动调用 Java 的 startChannelPolling() 开启数据流。
  * 
+ * 
  * 3. 数据流转 (Java -> C++):
  *    Java 层收到遥控器数据 -> 调用 nativeOnChannelsReceived(int[] channels)。
  *    JNI 函数将 int[] 转为 QList<int> -> 调用 JoystickRCSDK::updateRCChannels()。
@@ -424,20 +425,20 @@ bool JoystickRCSDK::_getHat(int hat, int i) const
     
     // HAT 开关通常有 4 个方向，用参数 i 来表示：
     // i=0: 上 (North)     - PWM > 1700
-    // i=1: 右 (East)      - PWM > 1500 且 <= 1700  
+    // i=1: 右 (East)      - PWM > 1300 且 <= 1700  
     // i=2: 下 (South)     - PWM <= 1300
-    // i=3: 左 (West)      - PWM > 1300 且 <= 1500
+    // i=3: 左 (West)      - PWM == 1500
     // 对于拨钮，你可以根据实际情况调整阈值
     
     switch (i) {
         case 0:  // Up
             return pwm > 1700;
-        case 1:  // Right
-            return pwm > 1500 && pwm <= 1700;
+        case 1:  // Mid
+            return pwm > 1300 && pwm <= 1700;
         case 2:  // Down
             return pwm <= 1300;
-        case 3:  // Left
-            return pwm > 1300 && pwm <= 1500;
+        case 3:  // Mid 多余中位
+            return pwm == 1500; 
         default:
             return false;
     }

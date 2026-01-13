@@ -85,7 +85,7 @@ SettingsPage {
         // RTSP1
         LabelledFactTextField {
             Layout.fillWidth: true
-            label: qsTr("IP1 Address(192.168.1.)")
+            label: qsTr("IP1 Address(192.168.10.)")
             fact: _videoSettings.rtsp1Ip
             visible: _isRTSP && _videoSettings.rtspUrl.visible
 
@@ -164,7 +164,7 @@ SettingsPage {
                 property: "rawValue"
                 value: (_videoSettings.rtsp1Ip.valueString.length > 0 &&
                         _videoSettings.rtsp1StreamNo.valueString.length > 0)
-                       ? "rtsp://admin:Hik12345@192.168.1." + _videoSettings.rtsp1Ip.valueString +
+                       ? "rtsp://admin:Hik12345@192.168.10." + _videoSettings.rtsp1Ip.valueString +
                          ":554/Streaming/Channels/" + _videoSettings.rtsp1StreamNo.valueString
                        : ""
             }
@@ -186,7 +186,7 @@ SettingsPage {
         // RTSP2
         LabelledFactTextField {
             Layout.fillWidth: true
-            label: qsTr("IP2 Address(192.168.1.)")
+            label: qsTr("IP2 Address(192.168.10.)")
             fact: _videoSettings.rtsp2Ip
             visible: _isRTSP && _videoSettings.rtspUrl.visible
 
@@ -262,7 +262,7 @@ SettingsPage {
                 property: "rawValue"
                 value: (_videoSettings.rtsp2Ip.valueString.length > 0 &&
                         _videoSettings.rtsp2StreamNo.valueString.length > 0)
-                       ? "rtsp://admin:Hik12345@192.168.1." + _videoSettings.rtsp2Ip.valueString +
+                       ? "rtsp://admin:Hik12345@192.168.10." + _videoSettings.rtsp2Ip.valueString +
                          ":554/Streaming/Channels/" + _videoSettings.rtsp2StreamNo.valueString
                        : ""
             }
@@ -284,7 +284,7 @@ SettingsPage {
         // RTSP3
         LabelledFactTextField {
             Layout.fillWidth: true
-            label: qsTr("IP3 Address(192.168.1)")
+            label: qsTr("IP3 Address(192.168.10.)")
             fact: _videoSettings.rtsp3Ip
             visible: _isRTSP && _videoSettings.rtspUrl.visible
 
@@ -360,7 +360,7 @@ SettingsPage {
                 property: "rawValue"
                 value: (_videoSettings.rtsp3Ip.valueString.length > 0 &&
                         _videoSettings.rtsp3StreamNo.valueString.length > 0)
-                       ? "rtsp://admin:Hik12345@192.168.1" + _videoSettings.rtsp3Ip.valueString +
+                       ? "rtsp://admin:Hik12345@192.168.10." + _videoSettings.rtsp3Ip.valueString +
                          ":554/Streaming/Channels/" + _videoSettings.rtsp3StreamNo.valueString
                        : ""
             }
@@ -381,7 +381,7 @@ SettingsPage {
         // RTSP4
         LabelledFactTextField {
             Layout.fillWidth: true
-            label: qsTr("IP4 Address(192.168.1.)")
+            label: qsTr("IP4 Address(192.168.10.)")
             fact: _videoSettings.rtsp4Ip
             visible: _isRTSP && _videoSettings.rtspUrl.visible
 
@@ -457,7 +457,7 @@ SettingsPage {
                 property: "rawValue"
                 value: (_videoSettings.rtsp4Ip.valueString.length > 0 &&
                         _videoSettings.rtsp4StreamNo.valueString.length > 0)
-                       ? "rtsp://admin:Hik12345@192.168.1." + _videoSettings.rtsp4Ip.valueString +
+                       ? "rtsp://admin:Hik12345@192.168.10." + _videoSettings.rtsp4Ip.valueString +
                          ":554/Streaming/Channels/" + _videoSettings.rtsp4StreamNo.valueString
                        : ""
             }
@@ -479,7 +479,7 @@ SettingsPage {
         // RTSP5
         LabelledFactTextField {
             Layout.fillWidth: true
-            label: qsTr("IP5 Address(192.168.1.)")
+            label: qsTr("IP5 Address(192.168.10.)")
             fact: _videoSettings.rtsp5Ip
             visible: _isRTSP && _videoSettings.rtspUrl.visible
 
@@ -554,7 +554,7 @@ SettingsPage {
                 property: "rawValue"
                 value: (_videoSettings.rtsp5Ip.valueString.length > 0 &&
                         _videoSettings.rtsp5StreamNo.valueString.length > 0)
-                       ? "rtsp://admin:Hik12345@192.168.1." + _videoSettings.rtsp5Ip.valueString +
+                       ? "rtsp://admin:Hik12345@192.168.10." + _videoSettings.rtsp5Ip.valueString +
                          ":554/Streaming/Channels/" + _videoSettings.rtsp5StreamNo.valueString
                        : ""
             }
