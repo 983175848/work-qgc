@@ -1,0 +1,11 @@
+prefix=/home/nirbheek/projects/repos/cerbero.git/1.22/build/dist/android_universal/arm64
+exec_prefix=${prefix}
+libdir=/home/nirbheek/projects/repos/cerbero.git/1.22/build/dist/android_universal/arm64/lib
+includedir=${prefix}/include
+
+Name: libtiff
+Description:  Tag Image File Format (TIFF) library.
+Version: 4.0.10
+Libs: -L${libdir} -ltiff
+Libs.private: -ljpeg -lz -lm 
+Cflags: -I${includedir}

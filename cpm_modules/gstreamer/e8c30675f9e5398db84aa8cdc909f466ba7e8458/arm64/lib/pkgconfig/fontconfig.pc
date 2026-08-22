@@ -1,0 +1,17 @@
+prefix=${pcfiledir}/../..
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+sysconfdir=/home/nirbheek/projects/repos/cerbero.git/1.22/build/dist/android_universal/arm64/etc
+localstatedir=/home/nirbheek/projects/repos/cerbero.git/1.22/build/dist/android_universal/arm64/var
+confdir=${sysconfdir}/fonts
+cachedir=${localstatedir}/cache/fontconfig
+
+Name: Fontconfig
+Description: Font configuration and customization library
+Version: 2.14.1
+Requires: freetype2 >=  21.0.15
+Requires.private: expat
+Libs: -L${libdir} -lfontconfig
+Libs.private: -pthread
+Cflags: -I${includedir}

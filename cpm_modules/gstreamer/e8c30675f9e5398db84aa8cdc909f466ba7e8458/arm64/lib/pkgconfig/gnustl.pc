@@ -1,0 +1,15 @@
+prefix=/home/nirbheek/projects/repos/cerbero.git/1.22/build/dist/android_universal/arm64
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+datarootdir=${prefix}/share
+datadir=${datarootdir}
+
+Name: gnustl
+Description: gnustl
+Version: 2.0
+Requires: 
+Requires.private: 
+Libs: -L${libdir} ${libdir}/libc++_shared.so
+Libs.private: 
+Cflags: -I/home/nirbheek/projects/repos/cerbero.git/1.22/build/android-ndk-21/sources/cxx-stl/llvm-libc++/include

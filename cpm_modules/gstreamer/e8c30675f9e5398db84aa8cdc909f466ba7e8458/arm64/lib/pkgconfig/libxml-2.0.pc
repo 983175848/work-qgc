@@ -1,0 +1,13 @@
+prefix=/home/nirbheek/projects/repos/cerbero.git/1.22/build/dist/android_universal/arm64
+exec_prefix=${prefix}
+libdir=/home/nirbheek/projects/repos/cerbero.git/1.22/build/dist/android_universal/arm64/lib
+includedir=${prefix}/include
+modules=1
+
+Name: libXML
+Version: 2.9.9
+Description: libXML library version2.
+Requires:
+Libs: -L${libdir} -lxml2
+Libs.private:   -L/home/nirbheek/projects/repos/cerbero.git/1.22/build/dist/android_universal/arm64/lib/pkgconfig/../../lib -lz   -lm  
+Cflags: -I${includedir}/libxml2 

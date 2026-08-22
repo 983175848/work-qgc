@@ -1,0 +1,13 @@
+GSTREAMER_PLUGINS_CORE := coreelements coretracers adder app audioconvert audiomixer audiorate audioresample audiotestsrc compositor gio overlaycomposition pango rawparse typefindfunctions videoconvertscale videorate videotestsrc volume autodetect videofilter switchbin
+GSTREAMER_PLUGINS_CODECS := subparse ogg theora vorbis opus ivorbisdec adaptivedemux2 alaw apetag audioparsers auparse avi dv flac flv flxdec icydemux id3demux isomp4 jpeg lame matroska mpg123 mulaw multipart png speex taglib vpx wavenc wavpack wavparse xingmux y4menc adpcmdec adpcmenc assrender bz2 codecalpha codectimestamper dash dvbsubenc dvbsuboverlay dvdspu hls id3tag ivfparse kate midi mxf openh264 opusparse pcapparse pnm rfbsrc siren smoothstreaming subenc videoparsersbad y4mdec jpegformat gdp rsvg openjpeg spandsp sbc zbar androidmedia
+GSTREAMER_PLUGINS_ENCODING := encoding
+GSTREAMER_PLUGINS_NET := tcp rtsp rtp rtpmanager soup udp dtls netsim rist rtmp2 rtpmanagerbad rtponvif sctp sdpelem srtp srt webrtc nice rtspclientsink
+GSTREAMER_PLUGINS_PLAYBACK := playback
+GSTREAMER_PLUGINS_SYS := opengl ipcpipeline opensles
+GSTREAMER_PLUGINS_EFFECTS := alpha alphacolor audiofx cairo cutter debug deinterlace dtmf effectv equalizer gdkpixbuf imagefreeze interleave level multifile replaygain shapewipe smpte spectrum videobox videocrop videomixer accurip aes aiff audiobuffersplit audiofxbad audiolatency audiomixmatrix autoconvert bayer coloreffects closedcaption debugutilsbad fieldanalysis freeverb frei0r gaudieffects geometrictransform inter interlace ivtc legacyrawparse proxy removesilence segmentclip smooth speed soundtouch timecode videofiltersbad videoframe_audiolevel videosignal webrtcdsp ladspa
+GSTREAMER_PLUGINS_VIS := goom goom2k1 audiovisualizers
+GSTREAMER_PLUGINS_CAPTURE := camerabin
+GSTREAMER_PLUGINS_CODECS_RESTRICTED := asfmux dtsdec mpegpsdemux mpegpsmux mpegtsdemux mpegtsmux voaacenc a52dec amrnb amrwbdec asf dvdsub dvdlpcmdec realmedia x264 libav
+GSTREAMER_PLUGINS_NET_RESTRICTED := rtmp
+GSTREAMER_PLUGINS_VULKAN := vulkan
+GSTREAMER_PLUGINS_GES := nle ges

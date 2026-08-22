@@ -1,0 +1,8 @@
+unmatchedSuppression
+missingIncludeSystem
+unusedFunction
+useStlAlgorithm
+noExplicitConstructor
+unusedStructMember
+normalCheckLevelMaxBranches
+*:*_deps/*

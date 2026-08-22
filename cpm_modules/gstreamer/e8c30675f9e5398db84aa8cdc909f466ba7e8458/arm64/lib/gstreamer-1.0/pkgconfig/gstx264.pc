@@ -1,0 +1,10 @@
+prefix=${pcfiledir}/../../..
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+Name: gstx264
+Description: gst-plugins-ugly: gstx264
+Version: 1.22.12
+Requires.private: gstreamer-base-1.0 >=  1.22.0, gstreamer-video-1.0 >=  1.22.0, gstreamer-pbutils-1.0 >=  1.22.0, x264
+Libs: -L${prefix}/lib/gstreamer-1.0 -lgstx264
+Cflags: -I${includedir}

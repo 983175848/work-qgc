@@ -1,0 +1,12 @@
+prefix=/home/nirbheek/projects/repos/cerbero.git/1.22/build/dist/android_universal/arm64
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: srt
+Description: SRT library set
+Version: 1.4.3
+Libs: -L${libdir} -lsrt   
+Libs.private:  -L/home/nirbheek/projects/repos/cerbero.git/1.22/build/dist/android_universal/arm64/lib /home/nirbheek/projects/repos/cerbero.git/1.22/build/dist/android_universal/arm64/lib/libc++_shared.so -pthread -lm -lgcc -ldl -lc -lgcc -ldl
+Cflags: -I${includedir} -I${includedir}/srt
+Requires.private: openssl libcrypto
